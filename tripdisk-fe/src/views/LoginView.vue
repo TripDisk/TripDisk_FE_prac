@@ -13,6 +13,8 @@
     <button @click.prevent="login">로그인</button>
     <button>회원가입</button>
   </div>
+
+  <button @click="session">세션 받아오기</button>
 </template>
 
 <script setup>
@@ -29,6 +31,11 @@ const login = function () {
   email.value = "";
   password.value = "";
 };
+
+const session = function() {
+  store.session();
+}
+
 </script>
 
 <style scoped></style>

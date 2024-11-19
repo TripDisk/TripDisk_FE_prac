@@ -8,15 +8,28 @@ const REST_API_URL = `http://localhost:8080/api/user`;
 export const useUserStore = defineStore("user", () => {
   const loginUser = ref(null);
 
+  const api = axios.create({
+    baseURL: REST_API_URL,
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    withCredentials: true,
+  })
+
   const login = function (email, password) {
     console.log(email);
     console.log(password);
+<<<<<<< Updated upstream
     axios
       .post(
         `${REST_API_URL}/login`,
         { email, password },
         { withCredentials: true }
       )
+=======
+    api
+      .post(`/login`, { email, password })
+>>>>>>> Stashed changes
       .then((response) => {
         console.log(response);
         router.push({ name: "calender" });
@@ -26,6 +39,13 @@ export const useUserStore = defineStore("user", () => {
         router.push({ name: "login" });
       });
   };
+
+  const session = function() {
+    api.get(`/current`)
+    .then((response) => {
+      console.log(response)
+    })
+  }
 
   // const userLogin = function (id, password) {
   //   axios
@@ -50,5 +70,5 @@ export const useUserStore = defineStore("user", () => {
   //     });
   // };
 
-  return { loginUser, login };
+  return { loginUser, login, session };
 });
