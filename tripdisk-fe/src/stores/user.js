@@ -3,7 +3,7 @@ import { defineStore } from "pinia";
 import axios from "axios";
 import router from "@/router";
 
-const REST_API_URL = `http://localhost:9999/api/user`;
+const REST_API_URL = `http://localhost:8080/api/user`;
 
 export const useUserStore = defineStore("user", () => {
   const loginUser = ref(null);
@@ -12,7 +12,11 @@ export const useUserStore = defineStore("user", () => {
     console.log(email);
     console.log(password);
     axios
-      .post(`${REST_API_URL}/login`, { email, password })
+      .post(
+        `${REST_API_URL}/login`,
+        { email, password },
+        { withCredentials: true }
+      )
       .then((response) => {
         console.log(response);
         router.push({ name: "calender" });
