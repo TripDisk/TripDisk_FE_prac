@@ -3,19 +3,19 @@
     <h2>회원가입</h2>
     <div class="form-group">
       <label for="username">Username</label>
-      <input id="username" type="text" v-model.trim="username" />
+      <input id="username" type="text" v-model.trim="username" required/>
     </div>
     <div class="form-group">
       <label for="email">Email</label>
-      <input id="email" type="email" v-model.trim="email" />
+      <input id="email" type="email" v-model.trim="email" required />
     </div>
     <div class="form-group">
       <label for="password">Password</label>
-      <input id="password" type="password" v-model.trim="password" />
+      <input id="password" type="password" v-model.trim="password" required />
     </div>
     <div class="form-group">
       <label for="profileImg">Profile Image URL</label>
-      <input id="profileImg" type="text" v-model.trim="profileImg" />
+      <input id="profileImg" type="file" @change="onFileChange" />
     </div>
     <button @click.prevent="signup">회원가입</button>
   </div>
@@ -30,10 +30,17 @@ import { useUserStore } from "@/stores/user.js";
 const username = ref("");
 const email = ref("");
 const password = ref("");
-const profileImg = ref("");
+const profileImg = ref(null);
 
 const router = useRouter();
 const store = useUserStore();
+
+const onFileChange = function(event) {
+  const file = event.target.files[0];
+  if (file) {
+    profileImg.value = file;
+  }
+};
 
 const signup = function () {
   store.signup(username.value, email.value, password.value, profileImg.value);
