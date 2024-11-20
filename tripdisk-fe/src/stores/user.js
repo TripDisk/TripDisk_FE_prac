@@ -8,19 +8,35 @@ const REST_API_URL = `http://localhost:8080/api/user`;
 export const useUserStore = defineStore("user", () => {
   const loginUser = ref(null);
 
+  const api = axios.create({
+    baseURL: REST_API_URL,
+    headers: {
+      "Content-Type": "application/json",
+    },
+    withCredentials: true,
+  });
+
   const login = function (email, password) {
     console.log(email);
     console.log(password);
-    axios
-      .post(`${REST_API_URL}/login`, { email, password })
+
+    api
+      .post(`/login`, { email, password })
       .then((response) => {
-        console.log(response);
-        router.push({ name: "calender" });
+        console.log(response.data);
+        router.push({ name: "calendar" });
       })
       .catch((error) => {
-        console.log(error);
+        console.log(error.response.data);
+        alert(error.response.data);
         router.push({ name: "login" });
       });
+  };
+
+  const session = function () {
+    api.get(`/current`).then((response) => {
+      console.log(response);
+    });
   };
 
   // const userLogin = function (id, password) {
@@ -46,5 +62,5 @@ export const useUserStore = defineStore("user", () => {
   //     });
   // };
 
-  return { loginUser, login };
+  return { loginUser, login, session };
 });
