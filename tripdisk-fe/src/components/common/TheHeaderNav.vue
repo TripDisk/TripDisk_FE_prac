@@ -1,24 +1,123 @@
 <template>
   <div>
     <nav>
-      <RouterLink :to="{ name: 'calendar' }">Calendar</RouterLink> |
-      <RouterLink :to="{ name: 'login' }">Login</RouterLink>
+      <div
+        class="user-menu"
+        v-if="userStore.loginUser.username"
+        @mouseenter="toggleDropdown(true)"
+        @mouseleave="toggleDropdown(false)"
+      >
+        <button class="user-button">
+          {{ userStore.loginUser.username }}님
+        </button>
+        <div v-if="isDropdownVisible" class="dropdown-menu">
+          <ul>
+            <li @click="logout">로그아웃</li>
+            <li @click="signout">회원탈퇴</li>
+          </ul>
+        </div>
+      </div>
     </nav>
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { ref } from "vue";
+import { useUserStore } from "@/stores/user";
+import { useRouter } from "vue-router";
+
+const userStore = useUserStore();
+const router = useRouter();
+
+const isDropdownVisible = ref(false); // 드롭다운 메뉴 상태
+
+const toggleDropdown = (visible) => {
+  isDropdownVisible.value = visible;
+};
+
+const logout = function () {
+  toggleDropdown(false);
+  userStore.logout();
+};
+
+const signout = function () {
+  toggleDropdown(false);
+  userStore.signout();
+};
+</script>
 
 <style scoped>
 nav {
-  text-align: center;
+  display: flex; /* 플렉스 박스 레이아웃으로 변경 */
+  justify-content: flex-start; /* 내부 컨텐츠를 좌측 정렬 */
+  align-items: center; /* 수직 방향으로 가운데 정렬 */
+  padding: 10px 20px; /* 네비게이션 바에 여백 추가 */
+  position: relative; /* 드롭다운 메뉴 배치를 위한 상대 위치 */
 }
+
+.user-menu {
+  position: relative;
+}
+
+.user-button {
+  background-color: #42b938;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.user-button:hover {
+  background-color: #359d74;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: rgba(255, 255, 255, 0.9);
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  width: 150px;
+  margin-top: 0px;
+  padding: 0;
+  overflow: hidden;
+}
+
+.dropdown-menu ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.dropdown-menu li {
+  padding: 10px 15px;
+  cursor: pointer;
+  font-size: 14px;
+  text-align: left;
+  color: #333;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.dropdown-menu li:hover {
+  background-color: #f5f5f5;
+  color: #42b983;
+}
+
+/* 링크 스타일
 nav a {
   font-weight: bold;
   text-decoration: none;
   color: black;
 }
+
 nav a.router-link-exact-active {
   color: #42b983;
-}
+} */
 </style>
