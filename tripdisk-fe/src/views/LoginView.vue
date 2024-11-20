@@ -14,7 +14,7 @@
     <button>회원가입</button>
   </div>
 
-  <button @click="session">세션 받아오기</button>
+  <!-- <button @click="session">세션 받아오기</button> -->
 </template>
 
 <script setup>
@@ -32,10 +32,9 @@ const login = function () {
   password.value = "";
 };
 
-const session = function() {
+const session = function () {
   store.session();
-}
-
+};
 </script>
 
 <style scoped></style>

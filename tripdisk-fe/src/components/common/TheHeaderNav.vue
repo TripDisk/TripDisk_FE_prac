@@ -1,7 +1,6 @@
 <template>
   <div>
     <nav>
-      <RouterLink to="/">Home</RouterLink> |
       <RouterLink :to="{ name: 'calendar' }">Calendar</RouterLink> |
       <RouterLink :to="{ name: 'login' }">Login</RouterLink>
     </nav>
