@@ -1,75 +1,36 @@
-<!--<template>
-  <div class="box">
-    <div class="email">
-      <span>Email</span>
-      <input type="text" v-model.trim="email" />
-    </div>
-
-    <div class="password">
-      <span>PW</span>
-      <input type="text" v-model.trim="password" />
-    </div>
-
-    <button @click.prevent="login">로그인</button>
-    <button @click="goToSignup">회원가입</button>
-  </div>
-</template>
-
-<script setup>
-import { ref } from "vue";
-import { useUserStore } from "../stores/user";
-import { useRouter } from "vue-router";
-
-const store = useUserStore();
-const router = useRouter();
-
-const email = ref("");
-const password = ref("");
-
-// 로그인
-const login = function () {
-  store.login(email.value, password.value);
-  email.value = "";
-  password.value = "";
-};
-
-// 회원가입
-const goToSignup = function () {
-  router.push({ name: "signup" });
-};
-</script>
-
-<style scoped></style>-->
-
 <template>
-  <div class="login-container">
-    <div class="login-box">
-      <h1 class="login-title">로그인</h1>
+  <form @submit.prevent="login">
+    <div class="login-container">
+      <div class="login-box">
+        <h1 class="login-title">로그인</h1>
 
-      <div class="form-group">
-        <label for="email">이메일</label>
-        <input
-          id="email"
-          type="email"
-          v-model.trim="email"
-          placeholder="example@domain.com"
-        />
+        <div class="form-group">
+          <label for="email">이메일</label>
+          <input
+            id="email"
+            type="email"
+            v-model.trim="email"
+            placeholder="example@domain.com"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="password">비밀번호</label>
+          <input
+            id="password"
+            type="password"
+            v-model.trim="password"
+            placeholder="비밀번호를 입력하세요"
+          />
+        </div>
+
+        <button class="btn-login">로그인</button>
+        <button type="button" class="btn-signup" @click="goToSignup">
+          회원가입
+        </button>
       </div>
-
-      <div class="form-group">
-        <label for="password">비밀번호</label>
-        <input
-          id="password"
-          type="password"
-          v-model.trim="password"
-          placeholder="비밀번호를 입력하세요"
-        />
-      </div>
-
-      <button class="btn-login" @click.prevent="login">로그인</button>
-      <button class="btn-signup" @click="goToSignup">회원가입</button>
     </div>
-  </div>
+  </form>
 </template>
 
 <script setup>

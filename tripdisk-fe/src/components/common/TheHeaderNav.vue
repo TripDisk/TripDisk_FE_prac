@@ -7,6 +7,14 @@
         @mouseenter="toggleDropdown(true)"
         @mouseleave="toggleDropdown(false)"
       >
+        <!-- 프로필 사진 -->
+        <img
+          :src="`http://localhost:8080/img/${userStore.loginUser.profileImg}`"
+          alt="프로필 이미지"
+          class="profile-img"
+        />
+
+        <!-- 유저 버튼 -->
         <button class="user-button">
           {{ userStore.loginUser.username }}님
         </button>
@@ -14,6 +22,7 @@
           <ul>
             <li @click="logout">로그아웃</li>
             <li @click="signout">회원탈퇴</li>
+            <li @click="update">회원정보 수정</li>
           </ul>
         </div>
       </div>
@@ -44,6 +53,11 @@ const signout = function () {
   toggleDropdown(false);
   userStore.signout();
 };
+
+const update = function () {
+  toggleDropdown(false);
+  router.push({ name: "update" });
+};
 </script>
 
 <style scoped>
@@ -57,6 +71,17 @@ nav {
 
 .user-menu {
   position: relative;
+  display: flex;
+}
+
+/* 프로필 이미지 스타일 */
+.profile-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%; /* 원 모양으로 설정 */
+  object-fit: cover; /* 이미지 크기에 맞게 자르기 */
+  margin-right: 10px; /* 이미지와 버튼 간격 */
+  border: 1px solid #ddd; /* 테두리 추가 */
 }
 
 .user-button {
