@@ -8,9 +8,13 @@ export const usePostStore = defineStore("post", () => {
   const post = ref({});
 
   const getPost = function (id) {
-    axios.get(`${REST_API_URL}/api-post/post/${id}`).then((res) => {
-      post.value = res.data;
-    });
+    axios
+      .get(`${REST_API_URL}/api-post/post/${id}`, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        post.value = res.data;
+      });
   };
 
   return { getPost, post };

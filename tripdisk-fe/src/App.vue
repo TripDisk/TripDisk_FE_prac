@@ -18,4 +18,9 @@ onMounted(() => {
 });
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped>
+div {
+  width: 1000px;
+  margin: auto;
+}
+</style>
