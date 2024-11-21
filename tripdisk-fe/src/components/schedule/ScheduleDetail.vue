@@ -27,30 +27,29 @@
 
       <!-- 버튼 -->
       <div class="button-group">
-        <RouterLink :to="`/schedule/update`" class="edit-button"
-          >일정 수정</RouterLink
-        >
-        <RouterLink :to="`/post/create`" class="add-post-button"
-          >게시글 등록</RouterLink
-        >
+        <button class="edit-button" @click="updateSchedule">일정 수정</button>
+        <button class="delete-button" @click="deleteSchedule">일정 삭제</button>
+        <button class="add-post-button" @click="createSchedule">
+          게시글 등록
+        </button>
       </div>
     </div>
 
     <div class="post-detail-wrapper">
       <!-- 게시글 전체 틀 -->
-      <div class="post-detail">
+      <div class="post-detail" v-for="post in stores.posts">
         <!-- 제목 -->
-        <h1 class="post-title">{{ stores.post.title }}</h1>
+        <h1 class="post-title">{{ post.title }}</h1>
 
         <!-- 날짜와 장소 -->
         <div class="meta-info">
           <div class="info-item">
             <span class="label">날짜:</span>
-            <span class="value">{{ stores.post.date }}</span>
+            <span class="value">{{ post.date }}</span>
           </div>
           <div class="info-item">
             <span class="label">장소:</span>
-            <span class="value">{{ stores.post.place }}</span>
+            <span class="value">{{ post.place }}</span>
           </div>
         </div>
 
@@ -58,14 +57,14 @@
         <div class="content-box">
           <div class="content-item">
             <span class="label">내용:</span>
-            <p class="value">{{ stores.post.content }}</p>
+            <p class="value">{{ post.content }}</p>
           </div>
         </div>
 
         <!-- 이미지 갤러리 -->
         <div class="image-gallery">
           <div
-            v-for="image in stores.post.imageFiles"
+            v-for="image in post.imageFiles"
             :key="image.fileId"
             class="image-wrapper"
           >
@@ -79,7 +78,7 @@
         <!-- 공유 여부 -->
         <div class="share-status">
           <span class="label">공유 여부:</span>
-          <input type="checkbox" v-model="stores.post.isShared" disabled />
+          <input type="checkbox" v-model="post.isShared" disabled />
         </div>
 
         <!-- 버튼 -->
@@ -98,17 +97,38 @@
 import { useScheduleStore } from "@/stores/schedule.js";
 import { usePostStore } from "@/stores/post.js";
 import { onMounted } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
+import axios from "axios";
 
 const route = useRoute();
+const router = useRouter();
 const store = useScheduleStore();
 
 const stores = usePostStore();
 
 onMounted(() => {
-  stores.getPost(route.params.id);
+  stores.getPostsByScheduleId(route.params.id);
   store.getSchedule(route.params.id);
 });
+
+const deleteSchedule = function () {
+  axios
+    .delete(`http://localhost:8080/api-schedule/schedule/${route.params.id}`)
+    .then(() => {
+      router.push({ name: "calendar" });
+    });
+};
+
+const updateSchedule = function () {
+  router.push({ name: "scheduleUpdate" });
+};
+
+const createSchedule = function () {
+  router.push({
+    name: "postCreate",
+    params: { id: `${route.params.id}` },
+  });
+};
 </script>
 
 <style scoped>
@@ -173,6 +193,7 @@ onMounted(() => {
 }
 
 .edit-button,
+.delete-button,
 .add-post-button {
   display: inline-block;
   text-align: center;
@@ -182,16 +203,21 @@ onMounted(() => {
   padding: 10px 15px;
   border-radius: 5px;
   font-weight: bold;
+  border: none;
 }
 
 .add-post-button {
   background-color: #2196f3;
 }
-
+.delete-button {
+  background-color: #f44336; /* 일정 삭제 버튼 색상 */
+}
 .edit-button:hover {
   background-color: #45a049;
 }
-
+.delete-button:hover {
+  background-color: #e53935; /* 호버 색상 */
+}
 .add-post-button:hover {
   background-color: #1976d2;
 }

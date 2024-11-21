@@ -20,7 +20,7 @@ onMounted(() => {
 
 <style scoped>
 div {
-  width: 1000px;
+  /* width: 1000px; */
   margin: auto;
 }
 </style>

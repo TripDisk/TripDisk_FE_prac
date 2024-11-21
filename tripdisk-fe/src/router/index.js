@@ -57,7 +57,7 @@ const router = createRouter({
       component: PostList,
     },
     {
-      path: "/post/create",
+      path: "/:id/post/create",
       name: "postCreate",
       component: PostCreate,
     },
