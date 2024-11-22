@@ -59,8 +59,7 @@ export const usePostStore = defineStore("post", () => {
         withCredentials: true,
       })
       .then((res) => {
-        const { message, postId } = res.data;
-        alert(message);
+        console.log("1 : ", postId);
         if (postId) {
           router.push({ name: "postDetail", params: { id: postId } });
         }
