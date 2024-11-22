@@ -29,9 +29,7 @@
       <div class="button-group">
         <button class="edit-button" @click="updateSchedule">일정 수정</button>
         <button class="delete-button" @click="deleteSchedule">일정 삭제</button>
-        <button class="add-post-button" @click="createSchedule">
-          게시글 등록
-        </button>
+        <button class="add-post-button" @click="createPost">게시글 등록</button>
       </div>
     </div>
 
@@ -123,10 +121,15 @@ const updateSchedule = function () {
   router.push({ name: "scheduleUpdate" });
 };
 
-const createSchedule = function () {
+//////////
+const createPost = function () {
   router.push({
     name: "postCreate",
     params: { id: `${route.params.id}` },
+    state: {
+      startDate: store.schedule.startDate,
+      endDate: store.schedule.endDate,
+    },
   });
 };
 

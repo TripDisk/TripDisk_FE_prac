@@ -18,7 +18,14 @@
       <!-- 날짜 -->
       <div class="form-group">
         <label for="date">날짜</label>
-        <input type="date" id="date" v-model="post.date" required />
+        <input
+          type="date"
+          id="date"
+          v-model="post.date"
+          :min="stores.schedule.startDate"
+          :max="stores.schedule.endDate"
+          required
+        />
       </div>
 
       <!-- 장소 -->
@@ -64,6 +71,7 @@
 import { ref } from "vue";
 import { useRoute } from "vue-router";
 import { usePostStore } from "@/stores/post.js";
+import { useScheduleStore } from "@/stores/schedule.js";
 const route = useRoute();
 
 const post = ref({
@@ -75,6 +83,7 @@ const post = ref({
 const imageFiles = ref([]);
 
 const store = usePostStore();
+const stores = useScheduleStore();
 
 const handleImageUpload = (event) => {
   console.log("이미지");

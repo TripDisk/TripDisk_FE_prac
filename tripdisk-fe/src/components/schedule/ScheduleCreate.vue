@@ -14,7 +14,13 @@
       </div>
       <div class="form-group">
         <label for="endDate">여행 종료일</label>
-        <input type="date" id="endDate" v-model="schedule.endDate" required />
+        <input
+          type="date"
+          id="endDate"
+          v-model="schedule.endDate"
+          :min="schedule.startDate"
+          required
+        />
       </div>
       <div class="form-group">
         <label for="location">여행한 나라</label>
@@ -32,21 +38,31 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted, watch } from "vue";
+import { useRoute } from "vue-router";
 import { useScheduleStore } from "@/stores/schedule.js";
-
+const route = useRoute();
 const store = useScheduleStore();
 
 // 폼 데이터 상태 관리
 const schedule = ref({
-  startDate: "",
+  startDate: history.state.startDate,
   endDate: "",
   location: "",
 });
-
 const submitSchedule = () => {
   store.createSchedule(schedule.value);
 };
+
+watch(
+  () => schedule.value.startDate,
+  (newStartDate) => {
+    // 시작일이 변경될 때 종료일의 최소값을 설정
+    if (newStartDate) {
+      schedule.value.endDate = ""; // 시작일이 변경되면 종료일 초기화
+    }
+  }
+);
 </script>
 
 <style scoped>
