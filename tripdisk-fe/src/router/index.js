@@ -43,7 +43,7 @@ const router = createRouter({
       component: ScheduleCreate,
     },
     {
-      path: "/schedule:id",
+      path: "/schedule/:id",
       name: "scheduleDetail",
       component: ScheduleDetail,
     },
@@ -58,12 +58,12 @@ const router = createRouter({
       component: PostList,
     },
     {
-      path: "/post/create",
+      path: "/:id/post/create",
       name: "postCreate",
       component: PostCreate,
     },
     {
-      path: "/post:id",
+      path: "/post/:id",
       name: "postDetail",
       component: PostDetail,
     },

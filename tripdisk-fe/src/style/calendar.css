@@ -1,0 +1,80 @@
+.container {
+  width: 800px;
+  margin: 0 auto;
+}
+
+.fc-toolbar.fc-header-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+
+/* 버튼 간 여백 조정 */
+.fc-toolbar > div {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  /* 버튼 간격 */
+}
+
+/* 헤더 스타일 */
+.fc-toolbar {
+  background-color: #f8f9fa;
+}
+
+#fc-dom-1 {
+  font-size: 20px !important;
+  font-weight: lighter !important;
+  color: black;
+}
+
+.fc-prev-button,
+.fc-next-button,
+.fc-prevYear-button,
+.fc-nextYear-button {
+  background: none !important;
+  /* 배경색 제거 */
+  border: none !important;
+  /* 테두리 제거 */
+  color: black !important;
+  /* 텍스트 색상 설정 */
+  font-size: 16px;
+  /* 버튼 크기 조정 */
+  padding: 5px;
+  /* 여백 조정 */
+  cursor: pointer;
+  /* 마우스 커서 변경 */
+}
+
+.fc-prev-button:hover,
+.fc-next-button:hover,
+.fc-prevYear-button:hover,
+.fc-nextYear-button:hover {
+  color: skyblue !important;
+  /* 호버 시 색상 변경 */
+}
+
+/* 오늘 날짜 강조 */
+.fc-day-today {
+  background-color: #e8f7ff !important;
+  border: 1px solid black;
+}
+
+/* 이벤트 스타일 */
+.fc-event {
+  background-color: skyblue;
+  color: black;
+  border: none;
+  border-radius: 4px;
+  padding: 2px 5px;
+  font-size: 12px;
+  text-align: center;
+}
+
+/* 이벤트 dot 스타일 (시간 이벤트용) */
+.fc-daygrid-event-dot {
+  width: var(--fc-daygrid-event-dot-width);
+  height: var(--fc-daygrid-event-dot-width);
+  background-color: var(--fc-event-bg-color);
+}
