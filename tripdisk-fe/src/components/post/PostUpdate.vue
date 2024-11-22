@@ -69,34 +69,27 @@ const route = useRoute();
 const router = useRouter();
 
 const store = usePostStore();
-const post = ref({
-  title: "",
-  date: "",
-  place: "",
-  content: "",
-});
-const imageFiles = ref([]);
 const handleImageUpload = (event) => {
-  post.value.imageFiles = Array.from(event.target.files);
+  store.post.imageFiles = Array.from(event.target.files);
 };
 
 const submitUpdate = async () => {
   const formData = new FormData();
 
   let json = JSON.stringify({
-    title: post.value.title,
-    date: post.value.date,
-    place: post.value.place,
-    content: post.value.content,
+    title: store.post.title,
+    scheduleId: store.post.scheduleId,
+    date: store.post.date,
+    place: store.post.place,
+    content: store.post.content,
   });
   const blob = new Blob([json], { type: "application/json" });
   formData.append("post", blob);
-  // 이미지 파일을 FormData에 추가
-  imageFiles.value.forEach((file) => {
+  store.post.imageFiles.forEach((file) => {
     formData.append("imageFiles", file);
   });
 
-  const postId = route.params.id;
+  const postId = store.post.postId;
   await store.updatePost(postId, formData);
 };
 </script>
