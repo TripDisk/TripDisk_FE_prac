@@ -11,8 +11,8 @@ import PostDetail from "@/components/post/PostDetail.vue";
 import PostList from "@/components/post/PostList.vue";
 import PostUpdate from "@/components/post/PostUpdate.vue";
 import UserSignup from "@/components/user/UserSignup.vue";
+import UserUpdate from "@/components/user/UserUpdate.vue";
 import { useUserStore } from "@/stores/user";
-
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -76,6 +76,11 @@ const router = createRouter({
       path: "/signup",
       name: "signup",
       component: UserSignup,
+    },
+    {
+      path: "/update",
+      name: "update",
+      component: UserUpdate,
     },
   ],
 });
