@@ -17,11 +17,12 @@
 import FullCalendar from "@fullcalendar/vue3";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
-import { reactive, ref, onMounted } from "vue";
+import { reactive, ref, onMounted, watch } from "vue";
 import { useCalendarStore } from "@/stores/calendar";
 import { useRouter } from "vue-router";
 import "@/style/calendar.css";
 const router = useRouter();
+const store = useCalendarStore();
 
 const handleEventClick = function (arg) {
   const id = arg.event.extendedProps.no;
@@ -37,10 +38,16 @@ const handleEventClick = function (arg) {
 };
 const handleDateClick = function (arg) {
   alert("일정을 등록! " + arg.dateStr);
-  router.push({ name: "scheduleCreate" });
+  router.push({ name: "scheduleCreate", state: { startDate: arg.dateStr } });
 };
-
-const store = useCalendarStore();
+// store.total 데이터가 변경될 때마다 calendarOptions의 events를 갱신
+watch(
+  () => store.total, // 감시할 데이터
+  (newTotal) => {
+    // 데이터가 변경될 때 실행할 콜백 함수
+    calendarOptions.value.events = newTotal;
+  }
+);
 
 store
   .getSchedules()

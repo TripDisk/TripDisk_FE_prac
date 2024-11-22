@@ -45,6 +45,7 @@ export const usePostStore = defineStore("post", () => {
         alert(message);
         if (postId) {
           router.push({ name: "postDetail", params: { id: postId } });
+          // location.href = `/post/${postId}`;
         }
       });
   };
