@@ -44,10 +44,8 @@
 
       <!-- 버튼 -->
       <div class="button-group">
-        <RouterLink :to="`/post/update`" class="edit-button"
-          >게시글 수정</RouterLink
-        >
-        <a href="#" class="delete-button">게시글 삭제</a>
+        <button class="edit-button" @click="updatePost">게시글 수정</button>
+        <button class="delete-button" @click="deletePost">게시글 삭제</button>
       </div>
     </div>
   </div>
@@ -56,14 +54,28 @@
 <script setup>
 import { usePostStore } from "@/stores/post.js";
 import { onMounted } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
+import axios from "axios";
 
 const route = useRoute();
+const router = useRouter();
 const store = usePostStore();
 
 onMounted(() => {
   store.getPost(route.params.id);
 });
+
+const deletePost = function () {
+  axios
+    .delete(`http://localhost:8080/api-post/post/${route.params.id}`)
+    .then(() => {
+      router.push({ name: "calendar" });
+    });
+};
+
+const updatePost = function () {
+  router.push({ name: "postUpdate", params: { id: `${route.params.id}` } });
+};
 </script>
 
 <style scoped>
@@ -164,17 +176,16 @@ onMounted(() => {
   padding: 10px 15px;
   border-radius: 5px;
   font-weight: bold;
+  border: none;
+  cursor: pointer;
 }
-
 .delete-button {
-  background-color: #f44336;
+  background-color: #f44336; /* 일정 삭제 버튼 색상 */
 }
-
 .edit-button:hover {
   background-color: #45a049;
 }
-
 .delete-button:hover {
-  background-color: #d32f2f;
+  background-color: #e53935; /* 호버 색상 */
 }
 </style>

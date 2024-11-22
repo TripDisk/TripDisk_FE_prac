@@ -77,7 +77,9 @@ const imageFiles = ref([]);
 const store = usePostStore();
 
 const handleImageUpload = (event) => {
-  post.value.imageFiles = Array.from(event.target.files);
+  console.log("이미지");
+  imageFiles.value = Array.from(event.target.files);
+  console.log(imageFiles.value);
 };
 
 const submitPost = async () => {
@@ -93,7 +95,9 @@ const submitPost = async () => {
   const blob = new Blob([json], { type: "application/json" });
   formData.append("post", blob);
   // 이미지 파일을 FormData에 추가
+  console.log("forEach");
   imageFiles.value.forEach((file) => {
+    console.log(file);
     formData.append("imageFiles", file);
   });
 

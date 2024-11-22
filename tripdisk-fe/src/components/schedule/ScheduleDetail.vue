@@ -83,10 +83,10 @@
 
         <!-- 버튼 -->
         <div class="button-group">
-          <RouterLink :to="`/post/update`" class="edit-button"
-            >게시글 수정</RouterLink
-          >
-          <a href="#" class="delete-button">게시글 삭제</a>
+          <button class="edit-button" @click="updatePost">게시글 수정</button>
+          <button class="delete-button" @click="deletePost(post.postId)">
+            게시글 삭제
+          </button>
         </div>
       </div>
     </div>
@@ -128,6 +128,16 @@ const createSchedule = function () {
     name: "postCreate",
     params: { id: `${route.params.id}` },
   });
+};
+
+const deletePost = function (id) {
+  axios.delete(`http://localhost:8080/api-post/post/${id}`).then(() => {
+    router.push({ name: "calendar" });
+  });
+};
+
+const updatePost = function (id) {
+  router.push({ name: "postUpdate", params: { id } });
 };
 </script>
 
@@ -204,6 +214,7 @@ const createSchedule = function () {
   border-radius: 5px;
   font-weight: bold;
   border: none;
+  cursor: pointer;
 }
 
 .add-post-button {
