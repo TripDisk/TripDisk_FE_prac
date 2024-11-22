@@ -26,6 +26,13 @@
           </ul>
         </div>
       </div>
+
+      <img
+        :src="`http://localhost:8080/img/logo-no-background.png`"
+        alt="로고 이미지"
+        class="logo-img"
+        @click="goToCalendar"
+      />
     </nav>
   </div>
 </template>
@@ -58,6 +65,10 @@ const update = function () {
   toggleDropdown(false);
   router.push({ name: "update" });
 };
+
+const goToCalendar = function () {
+  router.push({ name: "calendar" });
+};
 </script>
 
 <style scoped>
@@ -83,6 +94,15 @@ nav {
   object-fit: cover; /* 이미지 크기에 맞게 자르기 */
   margin-right: 10px; /* 이미지와 버튼 간격 */
   border: 1px solid #ddd; /* 테두리 추가 */
+}
+
+.logo-img {
+  height: 40px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-left: auto;
+  cursor: pointer;
 }
 
 .user-button {
