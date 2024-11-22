@@ -26,7 +26,7 @@ export const useUserStore = defineStore("user", () => {
       .then((response) => {
         console.log(response.data);
         session();
-        console.log(loginUser.value);
+        console.log("LOGIN", loginUser.value);
         router.push({ name: "calendar" });
       })
       .catch((error) => {
@@ -41,7 +41,7 @@ export const useUserStore = defineStore("user", () => {
   const session = async function () {
     try {
       const response = await api.get(`/current`);
-      console.log(response.data);
+      console.log("USER DATA", response.data);
       loginUser.value = response.data;
       // console.log(loginUser.value.username);
       router.push({ name: "calendar" });
@@ -131,14 +131,17 @@ export const useUserStore = defineStore("user", () => {
       alert("회원정보가 수정되었습니다.");
 
       api.post(`/logout`);
-      api.post(`/login`, { email, password });
+      // api.post(`/login`, { email, password });
+      login(email, password);
 
-      loginUser.value = {
-        ...loginUser.value,
-        username: username,
-        password: password,
-        profileImg: profileImg,
-      };
+      // loginUser.value = {
+      //   ...loginUser.value,
+      //   username: username,
+      //   password: password,
+      //   profileImg: profileImg,
+      // };
+
+      console.log("UPDATE USER", loginUser.value);
     } catch (error) {
       console.error(error);
       alert("회원정보 수정에 실패했습니다.");

@@ -71,6 +71,7 @@ nav {
 
 .user-menu {
   position: relative;
+  align-items: center; /* 수직 방향으로 가운데 정렬 */
   display: flex;
 }
 

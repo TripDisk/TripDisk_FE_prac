@@ -71,6 +71,7 @@ const previewImg = ref(
 // 파일 선택 핸들러
 const onFileChange = (event) => {
   const file = event.target.files[0];
+  console.log(file);
   if (file) {
     profileImg.value = file;
     previewImg.value = URL.createObjectURL(file); // 이미지 미리보기 URL 생성
@@ -79,6 +80,7 @@ const onFileChange = (event) => {
 
 // 회원 정보 수정
 const update = function () {
+  console.log("PROFILE IMG", profileImg.value);
   userStore.update(
     userStore.loginUser.userId,
     username.value,
