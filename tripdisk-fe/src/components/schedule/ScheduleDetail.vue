@@ -1,27 +1,17 @@
 <template>
   <div class="schedule-detail-wrapper">
-    <!-- 스케줄 전체 틀 -->
+    <!-- 일정 정보 섹션 -->
     <div class="schedule-detail">
       <!-- 제목 -->
-      <h1 class="schedule-title">{{ store.schedule.location }} 일정</h1>
+      <h1 class="schedule-title">{{ store.schedule.location }}</h1>
 
       <!-- 여행 시작일과 종료일 -->
       <div class="meta-info">
         <div class="info-item">
-          <span class="label">여행 시작일:</span>
-          <span class="value">{{ store.schedule.startDate }}</span>
-        </div>
-        <div class="info-item">
-          <span class="label">여행 종료일:</span>
-          <span class="value">{{ store.schedule.endDate }}</span>
-        </div>
-      </div>
-
-      <!-- 여행지 -->
-      <div class="location-box">
-        <div class="location-item">
-          <span class="label">여행지:</span>
-          <span class="value">{{ store.schedule.location }}</span>
+          <span class="label">여행일 : </span>
+          <span class="value"
+            >{{ store.schedule.startDate }} ~ {{ store.schedule.endDate }}</span
+          >
         </div>
       </div>
 
@@ -33,57 +23,27 @@
       </div>
     </div>
 
-    <div class="post-detail-wrapper">
-      <!-- 게시글 전체 틀 -->
-      <div class="post-detail" v-for="post in stores.posts">
-        <!-- 제목 -->
-        <h1 class="post-title">{{ post.title }}</h1>
-
-        <!-- 날짜와 장소 -->
-        <div class="meta-info">
-          <div class="info-item">
-            <span class="label">날짜:</span>
-            <span class="value">{{ post.date }}</span>
+    <!-- 게시글 목록 섹션 -->
+    <div class="post-list" v-if="stores.posts.length > 0">
+      <!-- 게시글이 있을 때만 표시 -->
+      <h2 class="post-list-title">게시글 목록</h2>
+      <div class="post-item" v-for="post in stores.posts" :key="post.postId">
+        <!-- 제목과 날짜, 장소 -->
+        <div class="post-summary">
+          <div class="left">
+            <h3 class="post-title">{{ post.title }}</h3>
+            <span class="post-place">장소 : {{ post.place }}</span>
           </div>
-          <div class="info-item">
-            <span class="label">장소:</span>
-            <span class="value">{{ post.place }}</span>
-          </div>
-        </div>
-
-        <!-- 내용 -->
-        <div class="content-box">
-          <div class="content-item">
-            <span class="label">내용:</span>
-            <p class="value">{{ post.content }}</p>
-          </div>
-        </div>
-
-        <!-- 이미지 갤러리 -->
-        <div class="image-gallery">
-          <div
-            v-for="image in post.imageFiles"
-            :key="image.fileId"
-            class="image-wrapper"
-          >
-            <img
-              :src="`http://localhost:8080${image.fileId}`"
-              alt="Post Image"
-            />
-          </div>
-        </div>
-
-        <!-- 공유 여부 -->
-        <div class="share-status">
-          <span class="label">공유 여부:</span>
-          <input type="checkbox" v-model="post.isShared" disabled />
+          <span class="post-date">날짜 : {{ post.date }}</span>
         </div>
 
         <!-- 버튼 -->
-        <div class="button-group">
-          <button class="edit-button" @click="updatePost">게시글 수정</button>
+        <div class="post-buttons">
+          <button class="edit-button" @click="updatePost(post.postId)">
+            수정
+          </button>
           <button class="delete-button" @click="deletePost(post.postId)">
-            게시글 삭제
+            삭제
           </button>
         </div>
       </div>
@@ -101,7 +61,6 @@ import axios from "axios";
 const route = useRoute();
 const router = useRouter();
 const store = useScheduleStore();
-
 const stores = usePostStore();
 
 onMounted(() => {
@@ -121,7 +80,6 @@ const updateSchedule = function () {
   router.push({ name: "scheduleUpdate" });
 };
 
-//////////
 const createPost = function () {
   router.push({
     name: "postCreate",
@@ -135,43 +93,48 @@ const createPost = function () {
 
 const deletePost = function (id) {
   axios.delete(`http://localhost:8080/api-post/post/${id}`).then(() => {
-    router.push({ name: "calendar" });
+    stores.getPostsByScheduleId(route.params.id); // 게시글 목록 갱신
   });
 };
 
-const updatePost = function () {
-  router.push({ name: "postUpdate" });
+
+const updatePost = function (id) {
+  router.push({ name: "postUpdate", state: { id } });
 };
 </script>
 
 <style scoped>
 /* 전체 틀 */
 .schedule-detail-wrapper {
-  max-width: 600px;
+  max-width: 800px;
   margin: 20px auto;
   padding: 20px;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  background-color: #fff;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   font-family: "Arial", sans-serif;
 }
 
-/* 제목 */
-.schedule-title {
-  font-size: 2em;
-  font-weight: bold;
-  margin-bottom: 20px;
-  color: #333;
+/* 일정 정보 */
+.schedule-detail {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background-color: #fff;
+  padding: 20px;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* 여행 시작일과 종료일 */
-.meta-info {
+.schedule-title {
+  font-size: 1.8em;
+  font-weight: bold;
+  color: #333;
   margin-bottom: 20px;
+}
+
+.meta-info {
+  margin-bottom: 10px;
 }
 
 .info-item {
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 }
 
 .label {
@@ -184,55 +147,119 @@ const updatePost = function () {
   color: #333;
 }
 
-/* 여행지 정보 */
-.location-box {
-  background: #f9f9f9;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 20px;
-  margin-bottom: 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.location-item {
-  margin-top: 10px;
-}
-
 /* 버튼 그룹 */
 .button-group {
   display: flex;
-  justify-content: flex-end; /* 오른쪽 정렬 */
   gap: 10px;
+  justify-content: flex-end;
 }
 
 .edit-button,
 .delete-button,
 .add-post-button {
-  display: inline-block;
   text-align: center;
   background-color: #4caf50;
   color: white;
-  text-decoration: none;
   padding: 10px 15px;
   border-radius: 5px;
-  font-weight: bold;
   border: none;
   cursor: pointer;
+  font-weight: bold;
+}
+
+.edit-button:hover {
+  background-color: #45a049;
+}
+
+.delete-button {
+  background-color: #f44336;
+}
+
+.delete-button:hover {
+  background-color: #e53935;
 }
 
 .add-post-button {
   background-color: #2196f3;
 }
-.delete-button {
-  background-color: #f44336; /* 일정 삭제 버튼 색상 */
-}
-.edit-button:hover {
-  background-color: #45a049;
-}
-.delete-button:hover {
-  background-color: #e53935; /* 호버 색상 */
-}
+
 .add-post-button:hover {
   background-color: #1976d2;
+}
+
+/* 게시글 목록 */
+.post-list {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.post-list-title {
+  font-size: 1.6em;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.post-item {
+  border-bottom: 1px solid #ddd;
+  padding: 10px 0;
+}
+
+.post-item:last-child {
+  border-bottom: none;
+}
+
+/* 제목과 장소, 날짜 */
+.post-summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.post-summary .left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.post-date {
+  margin-left: auto; /* 날짜를 오른쪽으로 이동 */
+  font-size: 0.9em;
+  color: #999;
+}
+
+/* 버튼 섹션 */
+.post-buttons {
+  display: flex;
+  justify-content: flex-end; /* 오른쪽 정렬 */
+  gap: 10px;
+}
+
+.post-buttons .edit-button,
+.post-buttons .delete-button {
+  text-align: center;
+  background-color: #4caf50;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.post-buttons .edit-button:hover {
+  background-color: #45a049;
+}
+
+.post-buttons .delete-button {
+  background-color: #f44336;
+}
+
+.post-buttons .delete-button:hover {
+  background-color: #e53935;
 }
 </style>
