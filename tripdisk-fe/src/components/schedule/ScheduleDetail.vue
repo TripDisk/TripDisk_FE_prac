@@ -81,7 +81,9 @@
 
         <!-- 버튼 -->
         <div class="button-group">
-          <button class="edit-button" @click="updatePost">게시글 수정</button>
+          <button class="edit-button" @click="updatePost(post.postId)">
+            게시글 수정
+          </button>
           <button class="delete-button" @click="deletePost(post.postId)">
             게시글 삭제
           </button>
@@ -140,7 +142,7 @@ const deletePost = function (id) {
 };
 
 const updatePost = function (id) {
-  router.push({ name: "postUpdate", params: { id } });
+  router.push({ name: "postUpdate", state: { id } });
 };
 </script>
 

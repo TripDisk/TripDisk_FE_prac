@@ -44,7 +44,18 @@
         ></textarea>
       </div>
 
-      <!-- 이미지 업로드 -->
+      <!-- 이미지 갤러리 -->
+      <div class="image-gallery">
+        <div
+          v-for="image in store.post.imageFiles"
+          :key="image.fileId"
+          class="image-wrapper"
+        >
+          <img :src="`http://localhost:8080${image.fileId}`" alt="Post Image" />
+        </div>
+      </div>
+
+      <!-- 이미지 새로 업로드 -->
       <div class="form-group">
         <label for="imageFiles">이미지 업로드</label>
         <input
@@ -69,6 +80,9 @@ const route = useRoute();
 const router = useRouter();
 
 const store = usePostStore();
+onMounted(() => {
+  store.getPost(history.state.id);
+});
 const handleImageUpload = (event) => {
   store.post.imageFiles = Array.from(event.target.files);
 };
