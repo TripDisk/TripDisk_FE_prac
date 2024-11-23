@@ -44,7 +44,25 @@
         ></textarea>
       </div>
 
-      <!-- 이미지 업로드 -->
+      <!-- 이미지 갤러리 -->
+      <div class="image-gallery">
+        <div
+          v-for="image in store.post.imageFiles"
+          :key="image.fileId"
+          class="image-wrapper"
+        >
+          <img :src="`http://localhost:8080${image.fileId}`" alt="Post Image" />
+          <button
+            type="button"
+            @click="removeImage(image)"
+            class="remove-image-btn"
+          >
+            x
+          </button>
+        </div>
+      </div>
+
+      <!-- 이미지 새로 업로드 -->
       <div class="form-group">
         <label for="imageFiles">이미지 업로드</label>
         <input
@@ -77,12 +95,28 @@ const route = useRoute();
 const router = useRouter();
 
 const store = usePostStore();
+
+onMounted(() => {
+  store.getPost(history.state.id);
+});
+
+// 기존 이미지 삭제
+const removeImage = (image) => {
+  store.post.imageFiles = store.post.imageFiles.filter(
+    (img) => img.fileId !== image.fileId
+  );
+  console.log(store.post.imageFiles);
+};
+
+// 새 이미지 업로드 처리
 const stores = useScheduleStore();
 
 const handleImageUpload = (event) => {
   store.post.imageFiles = Array.from(event.target.files);
+  console.log(store.post.imageFiles);
 };
 
+// 수정 폼 제출
 const submitUpdate = async () => {
   const formData = new FormData();
 
@@ -95,10 +129,12 @@ const submitUpdate = async () => {
   });
   const blob = new Blob([json], { type: "application/json" });
   formData.append("post", blob);
+
+  // 새로운 이미지와 삭제된 이미지를 반영
   store.post.imageFiles.forEach((file) => {
     formData.append("imageFiles", file);
   });
-
+  console.log("수정:", formData.imageFiles);
   const postId = store.post.postId;
   await store.updatePost(postId, formData);
 };
@@ -154,6 +190,33 @@ input[type="file"] {
   margin-top: 5px;
 }
 
+.image-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.image-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.remove-image-btn {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.remove-image-btn:hover {
+  background-color: #f44336;
+}
+
 /* 버튼 */
 .submit-button {
   background-color: #4caf50;
@@ -171,5 +234,3 @@ input[type="file"] {
   background-color: #45a049;
 }
 </style>
-
-<!-- gitflow practice -->
