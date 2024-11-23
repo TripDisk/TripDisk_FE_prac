@@ -51,7 +51,10 @@
           :key="image.fileId"
           class="image-wrapper"
         >
-          <img :src="`http://localhost:8080${image.fileId}`" alt="Post Image" />
+          <img
+            :src="image.previewUrl || `http://localhost:8080${image.fileId}`"
+            alt="Post Image"
+          />
           <button
             type="button"
             @click="removeImage(image)"
@@ -93,26 +96,37 @@ onMounted(() => {
   store.getPost(history.state.id);
 });
 
-// 기존 이미지 삭제
+// 삭제된 이미지 추적
+const removedImages = ref([]);
+
 const removeImage = (image) => {
+  // 삭제된 이미지 추가
+  removedImages.value.push(image.fileName);
+  // 기존 이미지에서 삭제
   store.post.imageFiles = store.post.imageFiles.filter(
     (img) => img.fileId !== image.fileId
   );
-  console.log(store.post.imageFiles);
 };
 
 // 새 이미지 업로드 처리
 const stores = useScheduleStore();
-
 const handleImageUpload = (event) => {
-  store.post.imageFiles = Array.from(event.target.files);
-  console.log(store.post.imageFiles);
+  const inputImages = Array.from(event.target.files);
+
+  // 새로 업로드된 이미지들의 미리보기 URL 생성
+  const newImages = inputImages.map((file) => ({
+    previewUrl: URL.createObjectURL(file), // 미리보기 URL 생성
+    file, // 실제 파일 정보
+  }));
+
+  store.post.imageFiles = [...store.post.imageFiles, ...newImages];
+  console.log("추가후 : ", store.post.imageFiles);
 };
 
 // 수정 폼 제출
 const submitUpdate = async () => {
   const formData = new FormData();
-
+  // console.log("최종 전송 : ", newImages);
   let json = JSON.stringify({
     title: store.post.title,
     scheduleId: store.post.scheduleId,
@@ -124,10 +138,12 @@ const submitUpdate = async () => {
   formData.append("post", blob);
 
   // 새로운 이미지와 삭제된 이미지를 반영
-  store.post.imageFiles.forEach((file) => {
-    formData.append("imageFiles", file);
+  store.post.imageFiles.forEach((image) => {
+    formData.append("imageFiles", image.file);
   });
-  console.log("수정:", formData.imageFiles);
+  // db에서도 삭제할 이미지 전송
+  formData.append("fileNames", JSON.stringify(removedImages.value));
+
   const postId = store.post.postId;
   await store.updatePost(postId, formData);
 };
@@ -191,6 +207,15 @@ input[type="file"] {
 .image-wrapper {
   position: relative;
   display: inline-block;
+  width: 100px; /* 이미지 크기 고정 */
+  height: 100px; /* 이미지 크기 고정 */
+  overflow: hidden; /* 이미지가 영역을 벗어나지 않도록 */
+}
+
+.image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* 이미지를 비율에 맞게 자르면서 영역을 채우도록 */
 }
 
 .remove-image-btn {
