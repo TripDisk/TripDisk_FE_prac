@@ -64,11 +64,14 @@
 import { ref, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { usePostStore } from "@/stores/post.js";
+import { useScheduleStore } from "@/stores/schedule.js";
 
 const route = useRoute();
 const router = useRouter();
 
 const store = usePostStore();
+const stores = useScheduleStore();
+
 const handleImageUpload = (event) => {
   store.post.imageFiles = Array.from(event.target.files);
 };
