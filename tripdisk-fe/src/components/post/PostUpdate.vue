@@ -55,6 +55,13 @@
         />
       </div>
 
+      <!-- 공유 여부 체크 박스 -->
+      <div class="share-status">
+        <span class="label">공유 여부:</span>
+        <input type="checkbox" :v-model="store.post.isShared" />
+      </div>
+      <p>{{ store.post.isShared }}</p>
+
       <button type="submit" class="submit-button">수정</button>
     </form>
   </div>
@@ -95,6 +102,7 @@ const submitUpdate = async () => {
   const postId = store.post.postId;
   await store.updatePost(postId, formData);
 };
+
 </script>
 
 <style scoped>

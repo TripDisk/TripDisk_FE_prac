@@ -76,7 +76,7 @@
         <!-- 공유 여부 -->
         <div class="share-status">
           <span class="label">공유 여부:</span>
-          <input type="checkbox" v-model="post.isShared" disabled />
+          <input type="checkbox" :checked="post.isShared" disabled />
         </div>
 
         <!-- 버튼 -->
