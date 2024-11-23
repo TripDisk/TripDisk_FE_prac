@@ -19,6 +19,7 @@
           type="date"
           id="endDate"
           v-model="store.schedule.endDate"
+          :min="store.schedule.startDate"
           required
         />
       </div>
@@ -41,11 +42,22 @@
 
 <script setup>
 import { useScheduleStore } from "@/stores/schedule.js";
+import { watch } from "vue";
+
 const store = useScheduleStore();
 
 const submitUpdate = function () {
   store.updateSchedule();
 };
+watch(
+  () => store.schedule.startDate,
+  (newStartDate) => {
+    // 시작일이 변경될 때 종료일의 최소값을 설정
+    if (newStartDate) {
+      store.schedule.endDate = ""; // 시작일이 변경되면 종료일 초기화
+    }
+  }
+);
 </script>
 
 <style scoped>

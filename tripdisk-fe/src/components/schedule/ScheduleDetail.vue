@@ -139,8 +139,8 @@ const deletePost = function (id) {
   });
 };
 
-const updatePost = function (id) {
-  router.push({ name: "postUpdate", params: { id } });
+const updatePost = function () {
+  router.push({ name: "postUpdate" });
 };
 </script>
 

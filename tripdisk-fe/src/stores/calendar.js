@@ -9,6 +9,7 @@ export const useCalendarStore = defineStore(
   () => {
     const schedules = ref([]);
     const posts = ref([]);
+    let idx = 0;
 
     const getSchedules = function () {
       return axios
@@ -18,7 +19,7 @@ export const useCalendarStore = defineStore(
         .then((res) => {
           // console.log("schedule res : ", res);
           schedules.value = res.data.map((schedule) => ({
-            id: schedule.scheduleId,
+            id: idx++,
             title: schedule.location,
             start: schedule.startDate, // 자동으로 자정으로 설정
             end: `${schedule.endDate}T23:59:59`, // 23:59:59으로 설정
@@ -41,7 +42,7 @@ export const useCalendarStore = defineStore(
         .then((res) => {
           // console.log("post res : ", res);
           posts.value = res.data.map((post) => ({
-            id: post.postId,
+            id: idx++,
             title: post.place,
             date: post.date,
             extendedProps: {
