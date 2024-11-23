@@ -82,11 +82,13 @@
 import { ref, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { usePostStore } from "@/stores/post.js";
+import { useScheduleStore } from "@/stores/schedule.js";
 
 const route = useRoute();
 const router = useRouter();
 
 const store = usePostStore();
+
 onMounted(() => {
   store.getPost(history.state.id);
 });
@@ -100,6 +102,8 @@ const removeImage = (image) => {
 };
 
 // 새 이미지 업로드 처리
+const stores = useScheduleStore();
+
 const handleImageUpload = (event) => {
   store.post.imageFiles = Array.from(event.target.files);
   console.log(store.post.imageFiles);

@@ -97,6 +97,7 @@ const deletePost = function (id) {
   });
 };
 
+
 const updatePost = function (id) {
   router.push({ name: "postUpdate", state: { id } });
 };
