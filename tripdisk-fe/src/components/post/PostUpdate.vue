@@ -73,6 +73,12 @@
         />
       </div>
 
+      <!-- 공유 여부 체크 박스 -->
+      <div class="share-status">
+        <span class="label">공유 여부:</span>
+        <input class="checkbox" type="checkbox" v-model="store.post.isShared" />
+      </div>
+
       <button type="submit" class="submit-button">수정</button>
     </form>
   </div>
@@ -119,6 +125,7 @@ const submitUpdate = async () => {
     date: store.post.date,
     place: store.post.place,
     content: store.post.content,
+    isShared: store.post.isShared,
   });
   const blob = new Blob([json], { type: "application/json" });
   formData.append("post", blob);
@@ -131,6 +138,7 @@ const submitUpdate = async () => {
   const postId = store.post.postId;
   await store.updatePost(postId, formData);
 };
+
 </script>
 
 <style scoped>
@@ -166,7 +174,7 @@ label {
 
 input,
 textarea {
-  width: 100%;
+
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -225,4 +233,23 @@ input[type="file"] {
 .submit-button:hover {
   background-color: #45a049;
 }
+
+/* 공유 여부 섹션 */
+.share-status {
+  display: flex;
+  align-items: center;
+  gap: 8px; 
+  margin-bottom: 15px; 
+}
+
+.label {
+  white-space: nowrap; /* 줄바꿈 방지 */
+  display: inline-block; /* 텍스트를 한 줄로 유지 */
+}
+
+.checkbox {
+
+  justify-items: flex-start;
+}
+
 </style>

@@ -37,6 +37,12 @@
           <span class="post-date">날짜 : {{ post.date }}</span>
         </div>
 
+        <!-- 공유 여부 -->
+        <div class="share-status">
+          <span class="label">공유 여부:</span>
+          <input type="checkbox" :checked="post.isShared" disabled />
+        </div>
+
         <!-- 버튼 -->
         <div class="post-buttons">
           <button class="edit-button" @click="updatePost(post.postId)">
