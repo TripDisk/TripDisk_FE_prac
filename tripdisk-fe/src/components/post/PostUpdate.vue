@@ -106,12 +106,20 @@ onMounted(() => {
 const removedImages = ref([]);
 
 const removeImage = (image) => {
-  // 삭제된 이미지 추가
-  removedImages.value.push(image.fileName);
-  // 기존 이미지에서 삭제
-  store.post.imageFiles = store.post.imageFiles.filter(
-    (img) => img.fileId !== image.fileId
-  );
+  if (image.fileId) {
+    // 기존 이미지 삭제
+    console.log("기존아이디 ", image.fileId);
+    removedImages.value.push(image.fileName); // 백에서 삭제할 이미지 전송
+    store.post.imageFiles = store.post.imageFiles.filter(
+      (img) => img.fileName !== image.fileName
+    );
+  } else if (image.previewUrl) {
+    // 새로 추가된 이미지 삭제
+
+    store.post.imageFiles = store.post.imageFiles.filter(
+      (img) => img.previewUrl !== image.previewUrl
+    );
+  }
 };
 
 // 새 이미지 업로드 처리
@@ -154,7 +162,6 @@ const submitUpdate = async () => {
   const postId = store.post.postId;
   await store.updatePost(postId, formData);
 };
-
 </script>
 
 <style scoped>
@@ -190,7 +197,6 @@ label {
 
 input,
 textarea {
-
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -207,39 +213,53 @@ input[type="file"] {
 }
 
 .image-gallery {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(150px, 1fr)
+  ); /* 카드 크기 조정 */
+  gap: 20px; /* 카드 간격 */
+  margin-top: 20px;
 }
 
 .image-wrapper {
   position: relative;
-  display: inline-block;
-  width: 100px; /* 이미지 크기 고정 */
-  height: 100px; /* 이미지 크기 고정 */
-  overflow: hidden; /* 이미지가 영역을 벗어나지 않도록 */
+  overflow: hidden; /* 영역을 벗어난 이미지를 숨김 */
+  background-color: #f9f9f9; /* 카드 배경색 */
+  border: 1px solid #ddd; /* 카드 테두리 */
+  border-radius: 10px; /* 카드 모서리 둥글게 */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+  transition: transform 0.1s ease, box-shadow 0.2s ease; /* 호버 시 애니메이션 */
 }
 
 .image-wrapper img {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* 이미지를 비율에 맞게 자르면서 영역을 채우도록 */
+  object-fit: cover; /* 이미지 비율 유지하며 카드에 맞춤 */
+  border-radius: 10px; /* 이미지 모서리 둥글게 */
 }
 
 .remove-image-btn {
   position: absolute;
-  top: 5px;
-  right: 5px;
-  background-color: rgba(0, 0, 0, 0.5);
+  top: 10px; /* 버튼 위치 */
+  right: 10px; /* 버튼 위치 */
+  background-color: rgba(81, 80, 80, 0.8); /* 투명한 빨간색 배경 */
   color: white;
   border: none;
-  border-radius: 50%;
-  padding: 5px;
+  border-radius: 50%; /* 원형 버튼 */
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* 버튼 그림자 */
+  font-size: 16px; /* 버튼 글자 크기 */
+  transition: background-color 0.2s ease;
 }
 
 .remove-image-btn:hover {
-  background-color: #f44336;
+  background-color: rgb(255, 0, 0); /* 호버 시 배경색 진하게 */
 }
 
 /* 버튼 */
@@ -263,8 +283,8 @@ input[type="file"] {
 .share-status {
   display: flex;
   align-items: center;
-  gap: 8px; 
-  margin-bottom: 15px; 
+  gap: 8px;
+  margin-bottom: 15px;
 }
 
 .label {
@@ -273,8 +293,6 @@ input[type="file"] {
 }
 
 .checkbox {
-
   justify-items: flex-start;
 }
-
 </style>
