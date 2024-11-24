@@ -68,11 +68,13 @@ onMounted(() => {
 });
 
 const deletePost = function () {
-  axios
-    .delete(`http://localhost:8080/api-post/post/${route.params.id}`)
-    .then(() => {
-      router.push({ name: "calendar" });
-    });
+  if (confirm("게시글을 삭제하시겠습니까?")) {
+    axios
+      .delete(`http://localhost:8080/api-post/post/${route.params.id}`)
+      .then(() => {
+        router.push({ name: "calendar" });
+      });
+  }
 };
 
 const updatePost = function (id) {
@@ -148,15 +150,15 @@ const updatePost = function (id) {
 /* 이미지 갤러리 */
 .image-gallery {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* 최소 150px */
   gap: 15px;
   margin-bottom: 20px;
 }
 
 .image-wrapper img {
   width: 100%;
-  height: 200px; /* 고정된 높이 설정 */
-  object-fit: cover; /* 이미지 비율 유지 */
+  height: auto; /* 높이를 자동으로 설정 */
+  object-fit: contain; /* 이미지 비율 유지, 잘리지 않도록 설정 */
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }

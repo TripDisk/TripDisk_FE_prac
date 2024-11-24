@@ -29,13 +29,17 @@
       <h2 class="post-list-title">게시글 목록</h2>
       <div class="post-item" v-for="post in stores.posts" :key="post.postId">
         <!-- 제목과 날짜, 장소 -->
-        <div class="post-summary">
-          <div class="left">
-            <h3 class="post-title">{{ post.title }}</h3>
-            <span class="post-place">장소 : {{ post.place }}</span>
-          </div>
-          <span class="post-date">날짜 : {{ post.date }}</span>
-        </div>
+        <RouterLink :to="`/post/${post.postId}`"
+          ><div class="post-summary">
+            <div class="left">
+              <h3 class="post-title">
+                {{ post.title }}
+              </h3>
+              <span class="post-place">장소 : {{ post.place }}</span>
+            </div>
+            <span class="post-date">날짜 : {{ post.date }}</span>
+          </div></RouterLink
+        >
 
         <!-- 공유 여부 -->
         <div class="share-status">
@@ -75,11 +79,14 @@ onMounted(() => {
 });
 
 const deleteSchedule = function () {
-  axios
-    .delete(`http://localhost:8080/api-schedule/schedule/${route.params.id}`)
-    .then(() => {
-      router.push({ name: "calendar" });
-    });
+  if (confirm("일정을 삭제하시겠습니까?")) {
+    axios
+      .delete(`http://localhost:8080/api-schedule/schedule/${route.params.id}`)
+      .then((res) => {
+        alert(res.data);
+        router.push({ name: "calendar" });
+      });
+  }
 };
 
 const updateSchedule = function () {
@@ -98,11 +105,12 @@ const createPost = function () {
 };
 
 const deletePost = function (id) {
-  axios.delete(`http://localhost:8080/api-post/post/${id}`).then(() => {
-    stores.getPostsByScheduleId(route.params.id); // 게시글 목록 갱신
-  });
+  if (confirm("게시글을 삭제하시겠습니까?")) {
+    axios.delete(`http://localhost:8080/api-post/post/${id}`).then(() => {
+      stores.getPostsByScheduleId(route.params.id); // 게시글 목록 갱신
+    });
+  }
 };
-
 
 const updatePost = function (id) {
   router.push({ name: "postUpdate", state: { id } });
@@ -267,5 +275,14 @@ const updatePost = function (id) {
 
 .post-buttons .delete-button:hover {
   background-color: #e53935;
+}
+
+a {
+  text-decoration: none; /* 밑줄 제거 */
+  color: black;
+}
+
+a:hover .post-summary {
+  background-color: rgba(211, 211, 211, 0.2);
 }
 </style>
