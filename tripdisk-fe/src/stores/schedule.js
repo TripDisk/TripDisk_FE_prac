@@ -53,7 +53,8 @@ export const useScheduleStore = defineStore("schedule", () => {
       .put(`${REST_API_URL}/${schedule.value.scheduleId}`, schedule.value, {
         withCredentials: true,
       })
-      .then(() => {
+      .then((res) => {
+        alert(res.data);
         router.push({
           name: "scheduleDetail",
           params: { id: schedule.value.scheduleId },

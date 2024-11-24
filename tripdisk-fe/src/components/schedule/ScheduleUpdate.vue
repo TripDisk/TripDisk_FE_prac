@@ -47,7 +47,10 @@ import { watch } from "vue";
 const store = useScheduleStore();
 
 const submitUpdate = function () {
-  store.updateSchedule();
+  if (confirm("일정을 수정하시겠습니까?")) {
+    // 확인을 눌렀을 때만 실행
+    store.updateSchedule();
+  }
 };
 watch(
   () => store.schedule.startDate,

@@ -98,26 +98,28 @@ const handleImageUpload = (event) => {
 };
 
 const submitPost = async () => {
-  const formData = new FormData();
+  if (confirm("게시글을 등록하시겠습니까?")) {
+    const formData = new FormData();
 
-  let json = JSON.stringify({
-    scheduleId: `${route.params.id}`,
-    title: post.value.title,
-    date: post.value.date,
-    place: post.value.place,
-    content: post.value.content,
-    isShared: store.post.isShared,
-  });
-  const blob = new Blob([json], { type: "application/json" });
-  formData.append("post", blob);
-  // 이미지 파일을 FormData에 추가
-  console.log("forEach");
-  imageFiles.value.forEach((file) => {
-    console.log(file);
-    formData.append("imageFiles", file);
-  });
+    let json = JSON.stringify({
+      scheduleId: `${route.params.id}`,
+      title: post.value.title,
+      date: post.value.date,
+      place: post.value.place,
+      content: post.value.content,
+      isShared: store.post.isShared,
+    });
+    const blob = new Blob([json], { type: "application/json" });
+    formData.append("post", blob);
+    // 이미지 파일을 FormData에 추가
+    console.log("forEach");
+    imageFiles.value.forEach((file) => {
+      console.log(file);
+      formData.append("imageFiles", file);
+    });
 
-  await store.createPost(formData);
+    await store.createPost(formData);
+  }
 };
 
 // const formData = new FormData();
@@ -206,8 +208,8 @@ input[type="file"] {
 .share-status {
   display: flex;
   align-items: center;
-  gap: 8px; 
-  margin-bottom: 15px; 
+  gap: 8px;
+  margin-bottom: 15px;
 }
 
 .label {
@@ -216,8 +218,6 @@ input[type="file"] {
 }
 
 .checkbox {
-
   justify-items: flex-start;
 }
-
 </style>
