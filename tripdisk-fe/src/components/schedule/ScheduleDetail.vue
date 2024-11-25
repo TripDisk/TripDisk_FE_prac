@@ -29,8 +29,8 @@
       <h2 class="post-list-title">게시글 목록</h2>
       <div class="post-item" v-for="post in stores.posts" :key="post.postId">
         <!-- 제목과 날짜, 장소 -->
-        <RouterLink :to="`/post/${post.postId}`"
-          ><div class="post-summary">
+        <RouterLink :to="`/post/${post.postId}`">
+          <div class="post-summary">
             <div class="left">
               <h3 class="post-title">
                 {{ post.title }}
@@ -38,14 +38,19 @@
               <span class="post-place">장소 : {{ post.place }}</span>
             </div>
             <span class="post-date">날짜 : {{ post.date }}</span>
-          </div></RouterLink
-        >
-
-        <!-- 공유 여부 -->
-        <div class="share-status">
-          <span class="label">공유 여부:</span>
-          <input type="checkbox" :checked="post.isShared" disabled />
-        </div>
+          </div>
+          <!-- 공유 여부 -->
+          <div class="share-status">
+            <span class="label">공유 여부:</span>
+            <input type="checkbox" :checked="post.isShared" disabled />
+          </div>
+          <!-- 좋아요 버튼 -->
+          <div class="likes">
+            <i v-if="liked" class="bi bi-heart-fill"></i>
+            <i v-else class="bi bi-heart"></i>
+            <span>{{ post.likesCount }}</span>
+          </div>
+        </RouterLink>
 
         <!-- 버튼 -->
         <div class="post-buttons">
@@ -64,7 +69,8 @@
 <script setup>
 import { useScheduleStore } from "@/stores/schedule.js";
 import { usePostStore } from "@/stores/post.js";
-import { onMounted } from "vue";
+import { useLikesStore } from "@/stores/likes";
+import { ref, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import axios from "axios";
 
@@ -72,6 +78,7 @@ const route = useRoute();
 const router = useRouter();
 const store = useScheduleStore();
 const stores = usePostStore();
+const likesStore = useLikesStore();
 
 onMounted(() => {
   stores.getPostsByScheduleId(route.params.id);
@@ -103,6 +110,8 @@ const createPost = function () {
     },
   });
 };
+
+const liked = likesStore.checkLike(stores.post.userId, stores.post.postId);
 
 const deletePost = function (id) {
   if (confirm("게시글을 삭제하시겠습니까?")) {
@@ -245,6 +254,15 @@ const updatePost = function (id) {
   font-size: 0.9em;
   color: #999;
 }
+
+/* fas.fa-heart {
+  color: grey !important;
+  font-size: 20px;
+}
+
+.share-status .likes {
+  display: flex;
+} */
 
 /* 버튼 섹션 */
 .post-buttons {

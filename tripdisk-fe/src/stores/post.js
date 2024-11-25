@@ -17,6 +17,7 @@ export const usePostStore = defineStore("post", () => {
       })
       .then((res) => {
         post.value = res.data;
+        console.log(res.data);
       });
   };
 
@@ -67,5 +68,44 @@ export const usePostStore = defineStore("post", () => {
       });
   };
 
-  return { getPost, getPostsByScheduleId, createPost, updatePost, post, posts };
+  // 좋아요 카운트 증가
+  const countUpLikes = function (postId) {
+    axios
+      .post(`${REST_API_URL}/api-post/likes/countup/${postId}`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      })
+      .then((res) => {
+        console.log(res.data);
+        post.value.likesCount += 1;
+      });
+  };
+
+  // 좋아요 카운트 감소
+  const countDownLikes = function (postId) {
+    axios
+      .post(`${REST_API_URL}/api-post/likes/countdown/${postId}`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      })
+      .then((res) => {
+        console.log(res.data);
+        post.value.likesCount -= 1;
+      });
+  };
+
+  return {
+    getPost,
+    getPostsByScheduleId,
+    createPost,
+    updatePost,
+    post,
+    posts,
+    countUpLikes,
+    countDownLikes,
+  };
 });
