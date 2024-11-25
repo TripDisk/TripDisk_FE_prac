@@ -29,33 +29,24 @@
       <h2 class="post-list-title">게시글 목록</h2>
       <div class="post-item" v-for="post in stores.posts" :key="post.postId">
         <!-- 제목과 날짜, 장소 -->
-        <RouterLink :to="`/post/${post.postId}`"
-          ><div class="post-summary">
-            <div class="left">
-              <h3 class="post-title">
-                {{ post.title }}
-              </h3>
-              <span class="post-place">장소 : {{ post.place }}</span>
+        <RouterLink :to="`/post/${post.postId}`">
+          <div class="post-wrapper">
+            <div class="post-summary">
+              <div class="left">
+                <h3 class="post-title">
+                  {{ post.title }}
+                </h3>
+                <span class="post-place">장소 : {{ post.place }}</span>
+              </div>
+              <span class="post-date">날짜 : {{ post.date }}</span>
             </div>
-            <span class="post-date">날짜 : {{ post.date }}</span>
-          </div></RouterLink
-        >
-
-        <!-- 공유 여부 -->
-        <div class="share-status">
-          <span class="label">공유 여부:</span>
-          <input type="checkbox" :checked="post.isShared" disabled />
-        </div>
-
-        <!-- 버튼 -->
-        <div class="post-buttons">
-          <button class="edit-button" @click="updatePost(post.postId)">
-            수정
-          </button>
-          <button class="delete-button" @click="deletePost(post.postId)">
-            삭제
-          </button>
-        </div>
+            <!-- 공유 여부 -->
+            <div class="share-status">
+              <span class="label">공유 여부:</span>
+              <input type="checkbox" :checked="post.isShared" disabled />
+            </div>
+          </div>
+        </RouterLink>
       </div>
     </div>
   </div>
@@ -103,26 +94,14 @@ const createPost = function () {
     },
   });
 };
-
-const deletePost = function (id) {
-  if (confirm("게시글을 삭제하시겠습니까?")) {
-    axios.delete(`http://localhost:8080/api-post/post/${id}`).then(() => {
-      stores.getPostsByScheduleId(route.params.id); // 게시글 목록 갱신
-    });
-  }
-};
-
-const updatePost = function (id) {
-  router.push({ name: "postUpdate", state: { id } });
-};
 </script>
 
 <style scoped>
 /* 전체 틀 */
 .schedule-detail-wrapper {
-  max-width: 800px;
+  max-width: 900px;
   margin: 20px auto;
-  padding: 20px;
+  /* padding: 20px; */
   font-family: "Arial", sans-serif;
 }
 
@@ -231,7 +210,7 @@ const updatePost = function (id) {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 5px;
+  /* margin-bottom: 5px; */
 }
 
 .post-summary .left {
@@ -282,7 +261,13 @@ a {
   color: black;
 }
 
-a:hover .post-summary {
+a:hover .post-wrapper {
   background-color: rgba(211, 211, 211, 0.2);
+}
+
+.share-status {
+  text-align: right;
+  font-size: 0.9em;
+  color: #999;
 }
 </style>

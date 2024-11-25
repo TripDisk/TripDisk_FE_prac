@@ -9,6 +9,54 @@ export const usePostStore = defineStore("post", () => {
   const post = ref({});
   const posts = ref([]);
 
+  // 사용자 무관 공유 게시글 조회
+  const getShared = function () {
+    axios
+      .get(`${REST_API_URL}/api-post/shared`, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        posts.value = res.data;
+      });
+  };
+
+  // 로그인 사용자 전용 전체 조회
+  const getPosts = function () {
+    axios
+      .get(`${REST_API_URL}/api-post/post`, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        posts.value = res.data;
+      });
+  };
+
+  // 검색 조회
+  const searchPosts = function (key, word, shared) {
+    const condition = {
+      key: key,
+      word: word,
+      orderBy: "date", // 원하는 정렬 기준
+      orderByDir: "desc", // 원하는 정렬 방향
+      shared: shared, // 공유 여부 추가
+    };
+    return axios
+      .get(`${REST_API_URL}/api-post/post`, {
+        params: condition,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      })
+      .then((res) => {
+        console.log("결과", res);
+        posts.value = res.data;
+      })
+      .catch((err) => {
+        console.log("안나옴");
+      });
+  };
+
   // 조회
   const getPost = function (id) {
     axios
@@ -67,5 +115,15 @@ export const usePostStore = defineStore("post", () => {
       });
   };
 
-  return { getPost, getPostsByScheduleId, createPost, updatePost, post, posts };
+  return {
+    getShared,
+    getPost,
+    getPosts,
+    searchPosts,
+    getPostsByScheduleId,
+    createPost,
+    updatePost,
+    post,
+    posts,
+  };
 });

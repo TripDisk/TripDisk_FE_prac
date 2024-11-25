@@ -62,27 +62,6 @@ store
   })
   .then(() => {
     console.log("TOTAL", store.total);
-    // let tmp = [];
-    // for (let i = 0; i < store.total.length; i++) {
-    //   let schedule = {
-    //     id: i + 1,
-    //     title: store.total[i].title,
-    //     extendedProps: { content: store.total[i].content },
-    //   };
-    //   if (!!store.total[i].date) {
-    //     (schedule.date = store.total[i].date),
-    //       (schedule.extendedProps.type = "post"),
-    //       (schedule.extendedProps.no = store.total[i].postId);
-    //   } else {
-    //     schedule.start = store.total[i].start; // 자동으로 자정으로 설정
-    //     schedule.end = store.total[i].end; // 23:59:59으로 설정
-    //     (schedule.extendedProps.type = "schedule"),
-    //       (schedule.extendedProps.no = store.total[i].scheduleId);
-    //   }
-    //   tmp.push(schedule);
-    // }
-    // console.log("달력에 넣을래", tmp);
-    // calendarOptions.events = tmp;
   });
 
 // options api -> composition api

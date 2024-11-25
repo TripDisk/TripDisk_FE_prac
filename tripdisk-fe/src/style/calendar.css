@@ -1,6 +1,12 @@
 .container {
-  width: 800px;
   margin: 0 auto;
+}
+
+.fc-event-main {
+  cursor: pointer;
+}
+.fc-event:hover {
+  background-color: rgba(40, 75, 189, 0.6);
 }
 
 .fc-toolbar.fc-header-toolbar {
@@ -23,7 +29,7 @@
   background-color: #f8f9fa;
 }
 
-#fc-dom-1 {
+.fc-toolbar-title {
   font-size: 20px !important;
   font-weight: lighter !important;
   color: black;

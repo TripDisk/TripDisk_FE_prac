@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="schedule-update-wrapper">
     <h2>일정 수정</h2>
 
     <form @submit.prevent="submitUpdate">
@@ -48,22 +48,42 @@ const store = useScheduleStore();
 
 const submitUpdate = function () {
   if (confirm("일정을 수정하시겠습니까?")) {
-    // 확인을 눌렀을 때만 실행
     store.updateSchedule();
   }
 };
+
 watch(
   () => store.schedule.startDate,
   (newStartDate) => {
-    // 시작일이 변경될 때 종료일의 최소값을 설정
     if (newStartDate) {
-      store.schedule.endDate = ""; // 시작일이 변경되면 종료일 초기화
+      store.schedule.endDate = "";
     }
   }
 );
 </script>
 
 <style scoped>
+/* 전체 틀 */
+.schedule-update-wrapper {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-family: "Arial", sans-serif;
+}
+
+/* 제목 */
+h2 {
+  font-size: 2em;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* 폼 그룹 */
 .form-group {
   margin-bottom: 15px;
 }
@@ -75,19 +95,24 @@ label {
 }
 
 input {
-  width: 100%;
-  padding: 8px;
+  width: 95%;
+  padding: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
+  margin-top: 5px;
 }
 
+/* 버튼 */
 .submit-button {
   background-color: #4caf50;
   color: white;
   padding: 10px 15px;
   border: none;
-  border-radius: 4px;
+  border-radius: 5px;
   cursor: pointer;
+  font-weight: bold;
+  width: 100%;
+  margin-top: 20px;
 }
 
 .submit-button:hover {
