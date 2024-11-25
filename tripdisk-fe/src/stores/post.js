@@ -12,7 +12,7 @@ export const usePostStore = defineStore("post", () => {
   // 사용자 무관 공유 게시글 조회
   const getShared = function () {
     axios
-      .get(`${REST_API_URL}/api-post/shared`, {
+      .get(`${REST_API_URL}/api/post/shared`, {
         withCredentials: true,
       })
       .then((res) => {
@@ -23,7 +23,7 @@ export const usePostStore = defineStore("post", () => {
   // 로그인 사용자 전용 전체 조회
   const getPosts = function () {
     axios
-      .get(`${REST_API_URL}/api-post/post`, {
+      .get(`${REST_API_URL}/api/post`, {
         withCredentials: true,
       })
       .then((res) => {
@@ -41,7 +41,7 @@ export const usePostStore = defineStore("post", () => {
       shared: shared, // 공유 여부 추가
     };
     return axios
-      .get(`${REST_API_URL}/api-post/post`, {
+      .get(`${REST_API_URL}/api/post`, {
         params: condition,
         headers: {
           "Content-Type": "application/json",
@@ -60,7 +60,7 @@ export const usePostStore = defineStore("post", () => {
   // 조회
   const getPost = function (id) {
     axios
-      .get(`${REST_API_URL}/api-post/post/${id}`, {
+      .get(`${REST_API_URL}/api/post/${id}`, {
         withCredentials: true,
       })
       .then((res) => {
@@ -71,7 +71,7 @@ export const usePostStore = defineStore("post", () => {
   // 스케줄id도 게시글 조회
   const getPostsByScheduleId = function (id) {
     axios
-      .get(`${REST_API_URL}/api-post/${id}/post`, {
+      .get(`${REST_API_URL}/api/post/${id}/post`, {
         withCredentials: true,
       })
       .then((res) => {
@@ -82,7 +82,7 @@ export const usePostStore = defineStore("post", () => {
   // 등록
   const createPost = function (data) {
     axios
-      .post(`${REST_API_URL}/api-post/post`, data, {
+      .post(`${REST_API_URL}/api/post`, data, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -101,7 +101,7 @@ export const usePostStore = defineStore("post", () => {
   // 수정
   const updatePost = function (postId, data) {
     axios
-      .patch(`${REST_API_URL}/api-post/post/${postId}`, data, {
+      .patch(`${REST_API_URL}/api/post/${postId}`, data, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
