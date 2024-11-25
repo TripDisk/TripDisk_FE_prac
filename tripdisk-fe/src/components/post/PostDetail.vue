@@ -80,6 +80,33 @@ const deletePost = function () {
 const updatePost = function (id) {
   router.push({ name: "postUpdate", state: { id } });
 };
+<<<<<<< Updated upstream
+=======
+
+const liked = ref(false);
+
+likesStore.checkLike(store.post.userId, store.post.postId).then((res) => {
+  liked.value = res;
+  console.log("LIKED", liked.value);
+});
+
+const toggleLike = function () {
+  liked.value = !liked.value;
+  console.log("liked value : " + liked.value);
+  store.countUpLikes(store.post.postId);
+  console.log("좋아요 개수 : ", store.post.likesCount);
+  likesStore.addLike(store.post.userId, store.post.postId);
+  store.checkMyLike(store.post.userId, store.post.postId);
+};
+
+const removeLike = () => {
+  liked.value = !liked.value;
+  store.countDownLikes(store.post.postId);
+  console.log("좋아요 개수 : ", store.post.likesCount);
+  likesStore.deleteLike(store.post.userId, store.post.postId);
+  store.checkMyLike(store.post.userId, store.post.postId);
+};
+>>>>>>> Stashed changes
 </script>
 
 <style scoped>

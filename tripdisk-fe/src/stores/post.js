@@ -67,5 +67,66 @@ export const usePostStore = defineStore("post", () => {
       });
   };
 
+<<<<<<< Updated upstream
   return { getPost, getPostsByScheduleId, createPost, updatePost, post, posts };
+=======
+  // 좋아요 카운트 증가
+  const countUpLikes = function (postId) {
+    axios
+      .post(`${REST_API_URL}/api-post/likes/countup/${postId}`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      })
+      .then((res) => {
+        console.log(res.data);
+        post.value.likesCount += 1;
+      });
+  };
+
+  // 좋아요 카운트 감소
+  const countDownLikes = function (postId) {
+    axios
+      .post(`${REST_API_URL}/api-post/likes/countdown/${postId}`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      })
+      .then((res) => {
+        console.log(res.data);
+        post.value.likesCount -= 1;
+      });
+  };
+
+  // 내 게시물 좋아요 체크
+  const checkMyLike = function (userId, postId) {
+    axios.post(
+      `${REST_API_URL}/api-post/check/mylike`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      },
+      {
+        userId,
+        postId,
+      }
+    );
+  };
+
+  return {
+    getPost,
+    getPostsByScheduleId,
+    createPost,
+    updatePost,
+    post,
+    posts,
+    countUpLikes,
+    countDownLikes,
+    checkMyLike,
+  };
+>>>>>>> Stashed changes
 });
