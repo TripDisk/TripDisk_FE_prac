@@ -67,9 +67,6 @@ export const usePostStore = defineStore("post", () => {
       });
   };
 
-<<<<<<< Updated upstream
-  return { getPost, getPostsByScheduleId, createPost, updatePost, post, posts };
-=======
   // 좋아요 카운트 증가
   const countUpLikes = function (postId) {
     axios
@@ -128,5 +125,4 @@ export const usePostStore = defineStore("post", () => {
     countDownLikes,
     checkMyLike,
   };
->>>>>>> Stashed changes
 });

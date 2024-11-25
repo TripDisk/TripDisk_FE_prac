@@ -80,8 +80,6 @@ const deletePost = function () {
 const updatePost = function (id) {
   router.push({ name: "postUpdate", state: { id } });
 };
-<<<<<<< Updated upstream
-=======
 
 const liked = ref(false);
 
@@ -106,7 +104,6 @@ const removeLike = () => {
   likesStore.deleteLike(store.post.userId, store.post.postId);
   store.checkMyLike(store.post.userId, store.post.postId);
 };
->>>>>>> Stashed changes
 </script>
 
 <style scoped>

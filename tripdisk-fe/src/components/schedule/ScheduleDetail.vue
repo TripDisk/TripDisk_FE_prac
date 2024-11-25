@@ -38,17 +38,8 @@
               <span class="post-place">장소 : {{ post.place }}</span>
             </div>
             <span class="post-date">날짜 : {{ post.date }}</span>
-<<<<<<< Updated upstream
-          </div></RouterLink
-        >
-
-        <!-- 공유 여부 -->
-        <div class="share-status">
-          <span class="label">공유 여부:</span>
-          <input type="checkbox" :checked="post.isShared" disabled />
-        </div>
-=======
           </div>
+
           <!-- 공유 여부 -->
           <div class="share-status">
             <span class="label">공유 여부:</span>
@@ -61,7 +52,6 @@
             <span>{{ post.likesCount }}</span>
           </div>
         </RouterLink>
->>>>>>> Stashed changes
 
         <!-- 버튼 -->
         <div class="post-buttons">
