@@ -49,7 +49,6 @@ export const usePostStore = defineStore("post", () => {
         withCredentials: true,
       })
       .then((res) => {
-        console.log("결과", res);
         posts.value = res.data;
       })
       .catch((err) => {
@@ -65,7 +64,6 @@ export const usePostStore = defineStore("post", () => {
       })
       .then((res) => {
         post.value = res.data;
-        console.log(res.data);
       });
   };
 
@@ -126,7 +124,6 @@ export const usePostStore = defineStore("post", () => {
         withCredentials: true,
       })
       .then((res) => {
-        console.log(res.data);
         post.value.likesCount += 1;
       });
   };
@@ -141,11 +138,9 @@ export const usePostStore = defineStore("post", () => {
         withCredentials: true,
       })
       .then((res) => {
-        console.log(res.data);
         post.value.likesCount -= 1;
       });
   };
-
 
   // 내 게시물 좋아요 체크
   const checkMyLike = function (userId, postId) {
@@ -163,7 +158,6 @@ export const usePostStore = defineStore("post", () => {
       }
     );
   };
-
 
   return {
     getPost,

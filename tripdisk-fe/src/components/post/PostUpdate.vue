@@ -108,7 +108,6 @@ const removedImages = ref([]);
 const removeImage = (image) => {
   if (image.fileId) {
     // 기존 이미지 삭제
-    console.log("기존아이디 ", image.fileId);
     removedImages.value.push(image.fileName); // 백에서 삭제할 이미지 전송
     store.post.imageFiles = store.post.imageFiles.filter(
       (img) => img.fileName !== image.fileName
@@ -134,7 +133,6 @@ const handleImageUpload = (event) => {
   }));
 
   store.post.imageFiles = [...store.post.imageFiles, ...newImages];
-  console.log("추가후 : ", store.post.imageFiles);
 };
 
 // 수정 폼 제출

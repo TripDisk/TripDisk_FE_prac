@@ -111,9 +111,6 @@ router.beforeEach((to, from, next) => {
   const userStore = useUserStore();
   const isAuthenticated = !!userStore.loginUser.username; // 로그인 여부 확인
 
-  console.log(to);
-  console.log(next);
-
   if (to.meta.requiresAuth && !isAuthenticated) {
     // 인증이 필요한 페이지인데 로그인이 안 되어 있으면
     next({ name: "login" });

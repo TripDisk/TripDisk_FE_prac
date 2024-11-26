@@ -112,7 +112,6 @@ const handleImageUpload = (event) => {
     previewUrl: URL.createObjectURL(file), // 로컬 미리보기 URL 생성
   }));
   imageFiles.value = [...imageFiles.value, ...newImages];
-  console.log(imageFiles.value);
 };
 
 // 이미지 삭제 핸들러
@@ -138,7 +137,6 @@ const submitPost = async () => {
     const blob = new Blob([json], { type: "application/json" });
     formData.append("post", blob);
     // 이미지 파일을 FormData에 추가
-    console.log("forEach");
     imageFiles.value.forEach((image) => {
       formData.append("imageFiles", image.file);
     });
