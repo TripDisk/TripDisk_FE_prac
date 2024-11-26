@@ -44,7 +44,11 @@
 
       <!-- 좋아요 버튼 -->
       <div class="likes">
-        <i v-if="liked" class="bi bi-heart-fill" @click="removeLike"></i>
+        <i
+          v-if="store.post.isLiked"
+          class="bi bi-heart-fill"
+          @click="removeLike"
+        ></i>
         <i v-else class="bi bi-heart" @click="toggleLike"></i>
         <span>{{ store.post.likesCount }}</span>
       </div>
@@ -72,6 +76,8 @@ const router = useRouter();
 const store = usePostStore();
 const likesStore = useLikesStore();
 
+// const liked = ref(false);
+
 onMounted(() => {
   store.getPost(route.params.id);
 });
@@ -90,28 +96,23 @@ const updatePost = function (id) {
   router.push({ name: "postUpdate", state: { id } });
 };
 
-const liked = ref(false);
-
-likesStore.checkLike(store.post.userId, store.post.postId).then((res) => {
-  liked.value = res;
-  console.log("LIKED", liked.value);
-});
-
 const toggleLike = function () {
-  liked.value = !liked.value;
-  console.log("liked value : " + liked.value);
-  store.countUpLikes(store.post.postId);
-  console.log("좋아요 개수 : ", store.post.likesCount);
+  // liked.value = !liked.value;
+  // console.log("좋아요 uid pid : ", store.post.userId, " ", store.post.postId);
   likesStore.addLike(store.post.userId, store.post.postId);
-  store.checkMyLike(store.post.userId, store.post.postId);
+  store.post.isLiked = !store.post.isLiked;
+  store.post.likesCount += 1;
+  // store.checkMyLike(store.post.userId, store.post.postId);
 };
 
 const removeLike = () => {
-  liked.value = !liked.value;
-  store.countDownLikes(store.post.postId);
-  console.log("좋아요 개수 : ", store.post.likesCount);
+  // liked.value = !liked.value;
+  // store.countDownLikes(store.post.postId);
+  // console.log("좋아요 개수 : ", store.post.likesCount);
   likesStore.deleteLike(store.post.userId, store.post.postId);
-  store.checkMyLike(store.post.userId, store.post.postId);
+  store.post.isLiked = !store.post.isLiked;
+  store.post.likesCount -= 1;
+  // store.checkMyLike(store.post.userId, store.post.postId);
 };
 </script>
 
@@ -224,5 +225,18 @@ const removeLike = () => {
 }
 .delete-button:hover {
   background-color: #e53935; /* 호버 색상 */
+}
+.bi {
+  cursor: pointer;
+  margin-right: 3px;
+}
+
+.bi-heart-fill {
+  color: #ed6f63;
+}
+
+.likes {
+  width: 5%;
+  margin: 3px 0;
 }
 </style>

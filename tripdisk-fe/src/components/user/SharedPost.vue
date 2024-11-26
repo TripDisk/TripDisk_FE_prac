@@ -3,7 +3,9 @@
     <!-- 검색창 -->
     <div class="search-wrapper">
       <!-- 전체 게시글 확인 버튼 -->
-      <button @click="viewAllPosts" class="view-all-button">전체</button>
+      <button @click="viewAllPosts" class="view-all-button">
+        전체 게시글 확인
+      </button>
 
       <form @submit.prevent="searchPosts">
         <!-- 검색 옵션 -->
@@ -80,6 +82,21 @@
           </div>
         </div>
 
+        <!-- 좋아요 버튼 -->
+        <div class="likes">
+          <i
+            v-if="post.isLiked"
+            class="bi bi-heart-fill"
+            @click="removeLike(post.userId, post.postId)"
+          ></i>
+          <i
+            v-else
+            class="bi bi-heart"
+            @click="toggleLike(post.userId, post.postId)"
+          ></i>
+          <span>{{ post.likesCount }}</span>
+        </div>
+
         <!-- 공유 여부 -->
         <div class="share-status">
           <span class="label">공유 여부:</span>
@@ -104,10 +121,12 @@
 import { onMounted, ref, computed } from "vue";
 import { usePostStore } from "@/stores/post";
 import { useUserStore } from "@/stores/user";
+import { useLikesStore } from "@/stores/likes";
 import { useRouter } from "vue-router";
 const router = useRouter();
 const store = usePostStore();
 const stores = useUserStore();
+const likesStore = useLikesStore();
 const sessionUserId = ref(null);
 
 onMounted(() => {
@@ -118,7 +137,7 @@ onMounted(() => {
 
 const deletePost = function (id) {
   if (confirm("게시글을 삭제하시겠습니까?")) {
-    axios.delete(`http://localhost:8080/api-post/post/${id}`).then(() => {
+    axios.delete(`http://localhost:8080/api/post/${id}`).then(() => {
       router.push({ name: "calendar" });
     });
   }
@@ -143,6 +162,24 @@ const searchPosts = function () {
 
 const viewAllPosts = function () {
   store.getShared();
+};
+
+const toggleLike = function (userId, postId) {
+  likesStore.addLike(userId, postId);
+  const post = store.posts.find((post) => post.postId === postId);
+  if (post) {
+    post.isLiked = !post.isLiked;
+    post.likesCount += 1;
+  }
+};
+
+const removeLike = function (userId, postId) {
+  likesStore.deleteLike(userId, postId);
+  const post = store.posts.find((post) => post.postId === postId);
+  if (post) {
+    post.isLiked = !post.isLiked;
+    post.likesCount += -1;
+  }
 };
 </script>
 
@@ -362,5 +399,18 @@ button {
 
 .delete-button:hover {
   background-color: #a71d2a;
+}
+.bi {
+  cursor: pointer;
+  margin-right: 3px;
+}
+
+.bi-heart-fill {
+  color: #ed6f63;
+}
+
+.likes {
+  width: 5%;
+  margin: 3px 0;
 }
 </style>

@@ -3,7 +3,7 @@ import { defineStore } from "pinia";
 import axios from "axios";
 import router from "@/router";
 
-const REST_API_URL = `http://localhost:8080/api-likes`;
+const REST_API_URL = `http://localhost:8080/api/likes`;
 
 export const useLikesStore = defineStore("likes", () => {
   const api = axios.create({
@@ -15,45 +15,45 @@ export const useLikesStore = defineStore("likes", () => {
   });
 
   // 좋아요 등록
-  const addLike = async (userId, postId) => {
-    try {
-      console.log("likes.js : ", "좋아요 등록 시작");
-      console.log(userId, postId);
-      const response = await api.post(`/add`, {
-        userId,
-        postId,
+  const addLike = function (userId, postId) {
+    const data = {
+      userId: userId,
+      postId: postId,
+    };
+    axios
+      .post(`${REST_API_URL}/add`, data, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        console.log(res);
       });
-    } catch (error) {
-      console.log(err.response.data);
-    }
   };
 
   // 좋아요 취소
-  const deleteLike = async (userId, postId) => {
-    try {
-      const response = await api.post(`/delete`, {
-        userId,
-        postId,
+  const deleteLike = function (userId, postId) {
+    const data = {
+      userId: userId,
+      postId: postId,
+    };
+    axios
+      .post(`${REST_API_URL}/delete`, data, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        console.log(res);
       });
-    } catch (error) {
-      console.log(err.response.data);
-    }
   };
 
   // 좋아요 클릭 여부 검사
-  const checkLike = async (userId, postId) => {
-    let result;
-    await api
+  const checkLike = function (userId, postId) {
+    return axios
       .get(`/check`, {
         params: {
           userId,
           postId,
         },
       })
-      .then((res) => {
-        result = res.data;
-      });
-    return result;
+      .then((res) => {});
   };
 
   return { addLike, deleteLike, checkLike };

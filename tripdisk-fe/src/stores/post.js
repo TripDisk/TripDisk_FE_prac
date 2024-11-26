@@ -77,6 +77,7 @@ export const usePostStore = defineStore("post", () => {
       })
       .then((res) => {
         posts.value = res.data;
+        console.log("posts 여기 : ", res.data);
       });
   };
 
@@ -116,54 +117,52 @@ export const usePostStore = defineStore("post", () => {
       });
   };
 
-  // 좋아요 카운트 증가
-  const countUpLikes = function (postId) {
-    axios
-      .post(`${REST_API_URL}/api/post/likes/countup/${postId}`, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        withCredentials: true,
-      })
-      .then((res) => {
-        console.log(res.data);
-        post.value.likesCount += 1;
-      });
-  };
+  // // 좋아요 카운트 증가
+  // const countUpLikes = function (postId) {
+  //   axios
+  //     .post(`${REST_API_URL}/api/post/likes/countup/${postId}`, {
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       withCredentials: true,
+  //     })
+  //     .then((res) => {
+  //       console.log("좋아요 카운트 증가: ", res.data);
+  //       post.value.likesCount += 1;
+  //     });
+  // };
 
-  // 좋아요 카운트 감소
-  const countDownLikes = function (postId) {
-    axios
-      .post(`${REST_API_URL}/api/post/likes/countdown/${postId}`, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        withCredentials: true,
-      })
-      .then((res) => {
-        console.log(res.data);
-        post.value.likesCount -= 1;
-      });
-  };
+  // // 좋아요 카운트 감소
+  // const countDownLikes = function (postId) {
+  //   axios
+  //     .post(`${REST_API_URL}/api/post/likes/countdown/${postId}`, {
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       withCredentials: true,
+  //     })
+  //     .then((res) => {
+  //       console.log("좋아요 카운트 감소: ", res.data);
+  //       post.value.likesCount -= 1;
+  //     });
+  // };
 
-
-  // 내 게시물 좋아요 체크
-  const checkMyLike = function (userId, postId) {
-    axios.post(
-      `${REST_API_URL}/api-post/check/mylike`,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        withCredentials: true,
-      },
-      {
-        userId,
-        postId,
-      }
-    );
-  };
-
+  // // 내 게시물 좋아요 체크
+  // const checkMyLike = function (userId, postId) {
+  //   axios.post(
+  //     `${REST_API_URL}/api/post/check/mylike`,
+  //     {
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       withCredentials: true,
+  //     },
+  //     {
+  //       userId,
+  //       postId,
+  //     }
+  //   );
+  // };
 
   return {
     getPost,
@@ -175,8 +174,8 @@ export const usePostStore = defineStore("post", () => {
     updatePost,
     post,
     posts,
-    countUpLikes,
-    countDownLikes,
-    checkMyLike,
+    // countUpLikes,
+    // countDownLikes,
+    // checkMyLike,
   };
 });
