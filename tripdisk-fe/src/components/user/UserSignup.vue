@@ -135,7 +135,7 @@ const signup = () => {
 }
 
 .form-group input:focus {
-  border-color: #42b983;
+  border-color: #fab6b0;
   outline: none;
 }
 

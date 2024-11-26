@@ -20,7 +20,7 @@
         </button>
         <div v-if="isDropdownVisible" class="dropdown-menu">
           <ul>
-            <li @click="mypage">마이페이지</li>
+            <li @click="mypage">게시판</li>
             <li @click="logout">로그아웃</li>
             <li @click="signout">회원탈퇴</li>
             <li @click="update">회원정보 수정</li>

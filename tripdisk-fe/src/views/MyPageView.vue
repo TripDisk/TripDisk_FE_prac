@@ -35,10 +35,6 @@ nav a {
   font-weight: bold;
 }
 
-nav a:hover {
-  text-decoration: underline;
-}
-
 /* 활성화된 링크 스타일 */
 nav a.active {
   color: #000; /* 검정색으로 변경 */

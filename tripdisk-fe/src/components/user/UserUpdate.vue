@@ -147,7 +147,7 @@ const update = function () {
 }
 
 .form-group input:focus {
-  border-color: #42b983;
+  border-color: #fab6b0;
   outline: none;
 }
 
@@ -165,7 +165,7 @@ const update = function () {
 .btn-save {
   width: 100%;
   padding: 10px 15px;
-  background-color: #42b983;
+  background-color: #fab6b0;
   color: #ffffff;
   border: none;
   border-radius: 4px;
@@ -176,6 +176,6 @@ const update = function () {
 }
 
 .btn-save:hover {
-  background-color: #359d74;
+  background-color: #ff9d94;
 }
 </style>
