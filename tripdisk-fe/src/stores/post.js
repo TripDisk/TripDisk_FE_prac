@@ -119,7 +119,7 @@ export const usePostStore = defineStore("post", () => {
   // 좋아요 카운트 증가
   const countUpLikes = function (postId) {
     axios
-      .post(`${REST_API_URL}/api-post/likes/countup/${postId}`, {
+      .post(`${REST_API_URL}/api/post/likes/countup/${postId}`, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -134,7 +134,7 @@ export const usePostStore = defineStore("post", () => {
   // 좋아요 카운트 감소
   const countDownLikes = function (postId) {
     axios
-      .post(`${REST_API_URL}/api-post/likes/countdown/${postId}`, {
+      .post(`${REST_API_URL}/api/post/likes/countdown/${postId}`, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -167,6 +167,9 @@ export const usePostStore = defineStore("post", () => {
 
   return {
     getPost,
+    getPosts,
+    searchPosts,
+    getShared,
     getPostsByScheduleId,
     createPost,
     updatePost,
