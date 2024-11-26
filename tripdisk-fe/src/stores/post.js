@@ -146,6 +146,25 @@ export const usePostStore = defineStore("post", () => {
       });
   };
 
+
+  // 내 게시물 좋아요 체크
+  const checkMyLike = function (userId, postId) {
+    axios.post(
+      `${REST_API_URL}/api-post/check/mylike`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      },
+      {
+        userId,
+        postId,
+      }
+    );
+  };
+
+
   return {
     getPost,
     getPostsByScheduleId,
@@ -155,5 +174,6 @@ export const usePostStore = defineStore("post", () => {
     posts,
     countUpLikes,
     countDownLikes,
+    checkMyLike,
   };
 });
