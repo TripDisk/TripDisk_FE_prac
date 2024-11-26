@@ -6,36 +6,38 @@
       <button @click="viewAllPosts" class="view-all-button">
         전체 게시글 확인
       </button>
-      <!-- 공유한 글만 보기 체크박스 -->
-      <label class="checkbox-wrapper">
-        <input
-          type="checkbox"
-          v-model="isSharedOnly"
-          @change="filterSharedPosts"
-        />
-        공유한 글만 보기
-      </label>
+      <div class="search-right">
+        <!-- 공유한 글만 보기 체크박스 -->
+        <label class="checkbox-wrapper">
+          <input
+            type="checkbox"
+            v-model="isSharedOnly"
+            @change="filterSharedPosts"
+          />
+          공유한 글만 보기
+        </label>
 
-      <form @submit.prevent="searchPosts">
-        <!-- 검색 옵션 -->
-        <select v-model="searchKey" class="search-select">
-          <option value="all">전체</option>
-          <option value="title">제목</option>
-          <option value="content">내용</option>
-          <option value="place">장소</option>
-        </select>
+        <form @submit.prevent="searchPosts">
+          <!-- 검색 옵션 -->
+          <select v-model="searchKey" class="search-select">
+            <option value="all">전체</option>
+            <option value="title">제목</option>
+            <option value="content">내용</option>
+            <option value="place">장소</option>
+          </select>
 
-        <!-- 검색창 -->
-        <input
-          type="text"
-          v-model="searchWord"
-          class="search-input"
-          placeholder="검색어를 입력하세요"
-        />
+          <!-- 검색창 -->
+          <input
+            type="text"
+            v-model="searchWord"
+            class="search-input"
+            placeholder="검색어를 입력하세요"
+          />
 
-        <!-- 검색 버튼 -->
-        <button class="search-button">검색</button>
-      </form>
+          <!-- 검색 버튼 -->
+          <button class="search-button">검색</button>
+        </form>
+      </div>
     </div>
 
     <div class="post-detail-wrapper" v-for="post in filteredPosts">
@@ -220,7 +222,6 @@ const removeLike = function (userId, postId) {
   font-family: "Arial", sans-serif;
 }
 
-/* 검색창 스타일링 */
 /* 검색창 스타일링 */
 .search-wrapper {
   display: flex;

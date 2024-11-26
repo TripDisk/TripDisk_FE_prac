@@ -6,7 +6,7 @@
   cursor: pointer;
 }
 .fc-event:hover {
-  background-color: rgb(177, 160, 160);
+  background-color: #e4544fb2;
 }
 
 .fc-toolbar.fc-header-toolbar {
@@ -81,6 +81,7 @@
   justify-content: center;
   margin-top: 3px !important;
   margin-bottom: 3px !important;
+  cursor: pointer;
 }
 
 /* 이벤트 dot 스타일 (시간 이벤트용) */
@@ -105,6 +106,7 @@
   cursor: pointer;
 }
 
+/* 일정 글씨 색상 */
 #app
   > div
   > div.container
@@ -130,30 +132,4 @@
   > div
   > b {
   color: black;
-}
-
-#app
-  > div
-  > div.container
-  > div
-  > div.fc-view-harness.fc-view-harness-active
-  > div
-  > table
-  > tbody
-  > tr
-  > td
-  > div
-  > div
-  > div
-  > table
-  > tbody
-  > tr
-  > td.fc-day.fc-day-mon.fc-day-past.fc-daygrid-day
-  > div
-  > div.fc-daygrid-day-events
-  > div.fc-daygrid-event-harness.fc-daygrid-event-harness-abs
-  > a
-  > div
-  > div:hover {
-  background-color: rgb(177, 160, 160);
 }

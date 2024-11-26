@@ -113,7 +113,7 @@ nav {
 }
 
 .logo-img {
-  height: 40px;
+  height: 60px;
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
@@ -169,7 +169,7 @@ nav {
 
 .dropdown-menu li:hover {
   background-color: #f5f5f5;
-  color: #42b983;
+  color: #ff6a6aad;
 }
 
 /* 링크 스타일
