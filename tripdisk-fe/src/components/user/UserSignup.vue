@@ -153,7 +153,7 @@ const signup = () => {
 .btn-signup {
   width: 100%;
   padding: 10px 15px;
-  background-color: #42b983;
+  background-color: #fab6b0;
   color: #ffffff;
   border: none;
   border-radius: 4px;
@@ -164,6 +164,6 @@ const signup = () => {
 }
 
 .btn-signup:hover {
-  background-color: #359d74;
+  background-color: #ff9d94;
 }
 </style>

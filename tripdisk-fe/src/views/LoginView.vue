@@ -110,7 +110,7 @@ const goToSignup = function () {
 }
 
 .form-group input:focus {
-  border-color: #42b983;
+  border-color: #fab6b0;
   outline: none;
 }
 
@@ -118,7 +118,7 @@ const goToSignup = function () {
 .btn-login {
   width: 100%;
   padding: 10px 15px;
-  background-color: #42b983;
+  background-color: #fab6b0;
   color: #ffffff;
   border: none;
   border-radius: 4px;
@@ -129,15 +129,15 @@ const goToSignup = function () {
 }
 
 .btn-login:hover {
-  background-color: #359d74;
+  background-color: #ff9d94;
 }
 
 .btn-signup {
   width: 100%;
   padding: 10px 15px;
   background-color: #ffffff;
-  color: #42b983;
-  border: 1px solid #42b983;
+  color: #ff9d94;
+  border: 1px solid #fab6b0;
   border-radius: 4px;
   font-size: 16px;
   cursor: pointer;
@@ -145,7 +145,7 @@ const goToSignup = function () {
 }
 
 .btn-signup:hover {
-  background-color: #42b983;
+  background-color: #ff9d94;
   color: #ffffff;
 }
 </style>

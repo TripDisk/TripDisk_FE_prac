@@ -247,7 +247,7 @@ input[type="file"] {
 
 /* 버튼 */
 .submit-button {
-  background-color: #4caf50;
+  background-color: #fab6b0;
   color: white;
   padding: 10px 15px;
   border: none;
@@ -259,7 +259,7 @@ input[type="file"] {
 }
 
 .submit-button:hover {
-  background-color: #45a049;
+  background-color: #ff9d94;
 }
 
 /* 공유 여부 섹션 */

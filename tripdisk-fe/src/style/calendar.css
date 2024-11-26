@@ -6,7 +6,7 @@
   cursor: pointer;
 }
 .fc-event:hover {
-  background-color: rgba(40, 75, 189, 0.6);
+  background-color: #e4544fb2;
 }
 
 .fc-toolbar.fc-header-toolbar {
@@ -57,7 +57,7 @@
 .fc-next-button:hover,
 .fc-prevYear-button:hover,
 .fc-nextYear-button:hover {
-  color: skyblue !important;
+  color: rgb(255, 129, 129) !important;
   /* 호버 시 색상 변경 */
 }
 
@@ -69,13 +69,19 @@
 
 /* 이벤트 스타일 */
 .fc-event {
-  background-color: skyblue;
-  color: black;
+  background-color: #f17571b2;
   border: none;
   border-radius: 4px;
   padding: 2px 5px;
   font-size: 12px;
   text-align: center;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 3px !important;
+  margin-bottom: 3px !important;
+  cursor: pointer;
 }
 
 /* 이벤트 dot 스타일 (시간 이벤트용) */
@@ -83,4 +89,47 @@
   width: var(--fc-daygrid-event-dot-width);
   height: var(--fc-daygrid-event-dot-width);
   background-color: var(--fc-event-bg-color);
+}
+
+#app
+  > div
+  > div.container
+  > div
+  > div.fc-header-toolbar.fc-toolbar
+  > div:nth-child(3)
+  > button {
+  background-color: #fad0c9;
+  color: #6e6e6d;
+  border-color: #ed6f63;
+  border-style: dashed;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* 일정 글씨 색상 */
+#app
+  > div
+  > div.container
+  > div
+  > div.fc-view-harness.fc-view-harness-active
+  > div
+  > table
+  > tbody
+  > tr
+  > td
+  > div
+  > div
+  > div
+  > table
+  > tbody
+  > tr
+  > td
+  > div
+  > div.fc-daygrid-day-events
+  > div
+  > a
+  > div
+  > div
+  > b {
+  color: black;
 }
