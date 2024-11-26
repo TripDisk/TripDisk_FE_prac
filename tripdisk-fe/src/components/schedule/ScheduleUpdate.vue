@@ -104,7 +104,7 @@ input {
 
 /* 버튼 */
 .submit-button {
-  background-color: #4caf50;
+  background-color: #e69a8d;
   color: white;
   padding: 10px 15px;
   border: none;
@@ -116,6 +116,6 @@ input {
 }
 
 .submit-button:hover {
-  background-color: #45a049;
+  background-color: #cc7566;
 }
 </style>
