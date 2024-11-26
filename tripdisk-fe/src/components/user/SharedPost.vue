@@ -87,12 +87,12 @@
           <i
             v-if="post.isLiked"
             class="bi bi-heart-fill"
-            @click="removeLike(post.userId, post.postId)"
+            @click="removeLike(sessionUserId, post.postId)"
           ></i>
           <i
             v-else
             class="bi bi-heart"
-            @click="toggleLike(post.userId, post.postId)"
+            @click="toggleLike(sessionUserId, post.postId)"
           ></i>
           <span>{{ post.likesCount }}</span>
         </div>
