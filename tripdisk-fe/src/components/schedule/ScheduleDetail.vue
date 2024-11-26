@@ -46,7 +46,24 @@
               <input type="checkbox" :checked="post.isShared" disabled />
             </div>
           </div>
+          <!-- 좋아요 버튼 -->
+          <div class="likes">
+            <i v-if="liked" class="bi bi-heart-fill"></i>
+            <i v-else class="bi bi-heart"></i>
+            <span>{{ post.likesCount }}</span>
+          </div>
         </RouterLink>
+
+        <!-- 버튼 -->
+        <div class="post-buttons">
+          <button class="edit-button" @click="updatePost(post.postId)">
+            수정
+          </button>
+          <button class="delete-button" @click="deletePost(post.postId)">
+            삭제
+          </button>
+        </div>
+
       </div>
     </div>
   </div>
@@ -55,7 +72,8 @@
 <script setup>
 import { useScheduleStore } from "@/stores/schedule.js";
 import { usePostStore } from "@/stores/post.js";
-import { onMounted } from "vue";
+import { useLikesStore } from "@/stores/likes";
+import { ref, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import axios from "axios";
 
@@ -63,6 +81,7 @@ const route = useRoute();
 const router = useRouter();
 const store = useScheduleStore();
 const stores = usePostStore();
+const likesStore = useLikesStore();
 
 onMounted(() => {
   stores.getPostsByScheduleId(route.params.id);
@@ -72,7 +91,7 @@ onMounted(() => {
 const deleteSchedule = function () {
   if (confirm("일정을 삭제하시겠습니까?")) {
     axios
-      .delete(`http://localhost:8080/api-schedule/schedule/${route.params.id}`)
+      .delete(`http://localhost:8080/api/schedule/schedule/${route.params.id}`)
       .then((res) => {
         alert(res.data);
         router.push({ name: "calendar" });
@@ -94,6 +113,21 @@ const createPost = function () {
     },
   });
 };
+
+const liked = likesStore.checkLike(stores.post.userId, stores.post.postId);
+
+const deletePost = function (id) {
+  if (confirm("게시글을 삭제하시겠습니까?")) {
+    axios.delete(`http://localhost:8080/api/post/post/${id}`).then(() => {
+      stores.getPostsByScheduleId(route.params.id); // 게시글 목록 갱신
+    });
+  }
+};
+
+const updatePost = function (id) {
+  router.push({ name: "postUpdate", state: { id } });
+};
+
 </script>
 
 <style scoped>
@@ -224,6 +258,15 @@ const createPost = function () {
   font-size: 0.9em;
   color: #999;
 }
+
+/* fas.fa-heart {
+  color: grey !important;
+  font-size: 20px;
+}
+
+.share-status .likes {
+  display: flex;
+} */
 
 /* 버튼 섹션 */
 .post-buttons {

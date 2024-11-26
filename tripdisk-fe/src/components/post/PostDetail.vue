@@ -42,6 +42,13 @@
         <input type="checkbox" v-model="store.post.isShared" disabled />
       </div>
 
+      <!-- 좋아요 버튼 -->
+      <div class="likes">
+        <i v-if="liked" class="bi bi-heart-fill" @click="removeLike"></i>
+        <i v-else class="bi bi-heart" @click="toggleLike"></i>
+        <span>{{ store.post.likesCount }}</span>
+      </div>
+
       <!-- 버튼 -->
       <div class="button-group">
         <button class="edit-button" @click="updatePost(store.post.postId)">
@@ -55,13 +62,15 @@
 
 <script setup>
 import { usePostStore } from "@/stores/post.js";
-import { onMounted } from "vue";
+import { useLikesStore } from "@/stores/likes";
+import { ref, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import axios from "axios";
 
 const route = useRoute();
 const router = useRouter();
 const store = usePostStore();
+const likesStore = useLikesStore();
 
 onMounted(() => {
   store.getPost(route.params.id);
@@ -79,6 +88,28 @@ const deletePost = function () {
 
 const updatePost = function (id) {
   router.push({ name: "postUpdate", state: { id } });
+};
+
+const liked = ref(false);
+
+likesStore.checkLike(store.post.userId, store.post.postId).then((res) => {
+  liked.value = res;
+  console.log("LIKED", liked.value);
+});
+
+const toggleLike = function () {
+  liked.value = !liked.value;
+  console.log("liked value : " + liked.value);
+  store.countUpLikes(store.post.postId);
+  console.log("좋아요 개수 : ", store.post.likesCount);
+  likesStore.addLike(store.post.userId, store.post.postId);
+};
+
+const removeLike = () => {
+  liked.value = !liked.value;
+  store.countDownLikes(store.post.postId);
+  console.log("좋아요 개수 : ", store.post.likesCount);
+  likesStore.deleteLike(store.post.userId, store.post.postId);
 };
 </script>
 

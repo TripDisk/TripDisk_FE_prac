@@ -53,18 +53,27 @@ const toggleDropdown = (visible) => {
 };
 
 const logout = function () {
-  toggleDropdown(false);
-  userStore.logout();
+  const check = confirm("로그아웃 하시겠습니까?");
+  if (check) {
+    toggleDropdown(false);
+    userStore.logout();
+  }
 };
 
 const signout = function () {
-  toggleDropdown(false);
-  userStore.signout();
+  const check = confirm("회원 탈퇴를 하시겠습니까?");
+  if (check) {
+    toggleDropdown(false);
+    userStore.signout();
+  }
 };
 
 const update = function () {
-  toggleDropdown(false);
-  router.push({ name: "update" });
+  const check = confirm("회원 정보를 수정하시겠습니까?");
+  if (check) {
+    toggleDropdown(false);
+    router.push({ name: "update" });
+  }
 };
 
 const goToCalendar = function () {
