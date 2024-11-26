@@ -43,7 +43,7 @@ export const useCalendarStore = defineStore(
           // console.log("post res : ", res);
           posts.value = res.data.map((post) => ({
             id: idx++,
-            title: post.place,
+            title: post.title,
             date: post.date,
             extendedProps: {
               content: post.content,

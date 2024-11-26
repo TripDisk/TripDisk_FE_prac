@@ -45,12 +45,12 @@
               <span class="label">공유 여부:</span>
               <input type="checkbox" :checked="post.isShared" disabled />
             </div>
-          </div>
-          <!-- 좋아요 버튼 -->
-          <div class="likes">
-            <i v-if="liked" class="bi bi-heart-fill"></i>
-            <i v-else class="bi bi-heart"></i>
-            <span>{{ post.likesCount }}</span>
+            <!-- 좋아요 버튼 -->
+            <div class="likes">
+              <i v-if="post.isLiked" class="bi bi-heart-fill"></i>
+              <i v-else class="bi bi-heart"></i>
+              <span>{{ post.likesCount }}</span>
+            </div>
           </div>
         </RouterLink>
 
@@ -113,7 +113,7 @@ const createPost = function () {
   });
 };
 
-const liked = likesStore.checkLike(stores.post.userId, stores.post.postId);
+// const liked = likesStore.checkLike(stores.post.userId, stores.post.postId);
 
 const deletePost = function (id) {
   if (confirm("게시글을 삭제하시겠습니까?")) {
@@ -320,5 +320,18 @@ a:hover .post-wrapper {
   text-align: right;
   font-size: 0.9em;
   color: #999;
+}
+.bi {
+  cursor: pointer;
+  margin-right: 3px;
+}
+
+.bi-heart-fill {
+  color: #ed6f63;
+}
+
+.likes {
+  width: 5%;
+  margin: 3px 0;
 }
 </style>
