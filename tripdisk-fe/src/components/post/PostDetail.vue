@@ -79,7 +79,7 @@ onMounted(() => {
 const deletePost = function () {
   if (confirm("게시글을 삭제하시겠습니까?")) {
     axios
-      .delete(`http://localhost:8080/api-post/post/${route.params.id}`)
+      .delete(`http://localhost:8080/api/post/${route.params.id}`)
       .then(() => {
         router.push({ name: "calendar" });
       });
