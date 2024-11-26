@@ -103,6 +103,7 @@ const toggleLike = function () {
   store.countUpLikes(store.post.postId);
   console.log("좋아요 개수 : ", store.post.likesCount);
   likesStore.addLike(store.post.userId, store.post.postId);
+  store.checkMyLike(store.post.userId, store.post.postId);
 };
 
 const removeLike = () => {
@@ -110,6 +111,7 @@ const removeLike = () => {
   store.countDownLikes(store.post.postId);
   console.log("좋아요 개수 : ", store.post.likesCount);
   likesStore.deleteLike(store.post.userId, store.post.postId);
+  store.checkMyLike(store.post.userId, store.post.postId);
 };
 </script>
 
