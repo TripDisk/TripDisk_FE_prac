@@ -118,7 +118,7 @@ const liked = likesStore.checkLike(stores.post.userId, stores.post.postId);
 
 const deletePost = function (id) {
   if (confirm("게시글을 삭제하시겠습니까?")) {
-    axios.delete(`http://localhost:8080/api/post/post/${id}`).then(() => {
+    axios.delete(`http://localhost:8080/api/post/${id}`).then(() => {
       stores.getPostsByScheduleId(route.params.id); // 게시글 목록 갱신
     });
   }
