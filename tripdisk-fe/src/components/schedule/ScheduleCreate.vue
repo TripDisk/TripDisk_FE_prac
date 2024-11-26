@@ -44,7 +44,7 @@ const store = useScheduleStore();
 
 // 폼 데이터 상태 관리
 const schedule = ref({
-  startDate: "",
+  startDate: history.state.startDate,
   endDate: "",
   location: "",
 });

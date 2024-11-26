@@ -36,14 +36,16 @@
                 <h3 class="post-title">
                   {{ post.title }}
                 </h3>
-                <span class="post-place">장소 : {{ post.place }}</span>
               </div>
               <span class="post-date">날짜 : {{ post.date }}</span>
             </div>
             <!-- 공유 여부 -->
-            <div class="share-status">
-              <span class="label">공유 여부:</span>
-              <input type="checkbox" :checked="post.isShared" disabled />
+            <div class="wrap-line">
+              <span class="post-place">장소 : {{ post.place }}</span>
+              <div class="share-status">
+                <span class="label">공유 여부:</span>
+                <input type="checkbox" :checked="post.isShared" disabled />
+              </div>
             </div>
             <!-- 좋아요 버튼 -->
             <div class="likes">
@@ -333,5 +335,10 @@ a:hover .post-wrapper {
 .likes {
   width: 5%;
   margin: 3px 0;
+}
+.wrap-line {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
 }
 </style>

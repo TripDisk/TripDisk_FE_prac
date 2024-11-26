@@ -29,7 +29,7 @@
       </div>
 
       <img
-        :src="`http://localhost:8080/img/logo-no-background.png`"
+        :src="`http://localhost:8080/img/background.png`"
         alt="로고 이미지"
         class="logo-img"
         @click="goToCalendar"
@@ -113,7 +113,7 @@ nav {
 }
 
 .logo-img {
-  height: 60px;
+  height: 100px;
   position: absolute;
   left: 50%;
   transform: translateX(-50%);

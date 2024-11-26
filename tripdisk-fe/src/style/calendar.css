@@ -70,6 +70,7 @@
 /* 이벤트 스타일 */
 .fc-event {
   background-color: #f17571b2;
+  /* background-color: #f1793360; */
   border: none;
   border-radius: 4px;
   padding: 2px 5px;
