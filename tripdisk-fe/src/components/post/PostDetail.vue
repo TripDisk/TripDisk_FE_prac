@@ -42,6 +42,13 @@
         <input type="checkbox" v-model="store.post.isShared" disabled />
       </div>
 
+      <!-- 좋아요 버튼 -->
+      <div class="likes">
+        <i v-if="liked" class="bi bi-heart-fill" @click="removeLike"></i>
+        <i v-else class="bi bi-heart" @click="toggleLike"></i>
+        <span>{{ store.post.likesCount }}</span>
+      </div>
+
       <!-- 버튼 -->
       <div class="button-group">
         <button class="edit-button" @click="updatePost(store.post.postId)">
@@ -55,13 +62,15 @@
 
 <script setup>
 import { usePostStore } from "@/stores/post.js";
-import { onMounted } from "vue";
+import { useLikesStore } from "@/stores/likes";
+import { ref, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import axios from "axios";
 
 const route = useRoute();
 const router = useRouter();
 const store = usePostStore();
+const likesStore = useLikesStore();
 
 onMounted(() => {
   store.getPost(route.params.id);
@@ -70,7 +79,7 @@ onMounted(() => {
 const deletePost = function () {
   if (confirm("게시글을 삭제하시겠습니까?")) {
     axios
-      .delete(`http://localhost:8080/api-post/post/${route.params.id}`)
+      .delete(`http://localhost:8080/api/post/${route.params.id}`)
       .then(() => {
         router.push({ name: "calendar" });
       });

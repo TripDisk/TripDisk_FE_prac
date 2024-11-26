@@ -3,7 +3,7 @@ import { defineStore } from "pinia";
 import axios from "axios";
 import router from "@/router";
 
-const REST_API_URL = `http://localhost:8080/api-schedule/schedule`;
+const REST_API_URL = `http://localhost:8080/api/schedule`;
 
 export const useScheduleStore = defineStore("schedule", () => {
   const schedule = ref({});

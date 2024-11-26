@@ -29,25 +29,26 @@
       <h2 class="post-list-title">게시글 목록</h2>
       <div class="post-item" v-for="post in stores.posts" :key="post.postId">
         <!-- 제목과 날짜, 장소 -->
-        <RouterLink :to="`/post/${post.postId}`"
-          ><div class="post-summary">
-            <div class="left">
-              <h3 class="post-title">
-                {{ post.title }}
-              </h3>
-              <span class="post-place">장소 : {{ post.place }}</span>
+        <RouterLink :to="`/post/${post.postId}`">
+          <div class="post-wrapper">
+            <div class="post-summary">
+              <div class="left">
+                <h3 class="post-title">
+                  {{ post.title }}
+                </h3>
+                <span class="post-place">장소 : {{ post.place }}</span>
+              </div>
+              <span class="post-date">날짜 : {{ post.date }}</span>
             </div>
-            <span class="post-date">날짜 : {{ post.date }}</span>
-          </div>
-
-          <!-- 공유 여부 -->
-          <div class="share-status">
-            <span class="label">공유 여부:</span>
-            <input type="checkbox" :checked="post.isShared" disabled />
+            <!-- 공유 여부 -->
+            <div class="share-status">
+              <span class="label">공유 여부:</span>
+              <input type="checkbox" :checked="post.isShared" disabled />
+            </div>
           </div>
           <!-- 좋아요 버튼 -->
           <div class="likes">
-            <i v-if="post.isLiked" class="bi bi-heart-fill"></i>
+            <i v-if="liked" class="bi bi-heart-fill"></i>
             <i v-else class="bi bi-heart"></i>
             <span>{{ post.likesCount }}</span>
           </div>
@@ -62,6 +63,7 @@
             삭제
           </button>
         </div>
+
       </div>
     </div>
   </div>
@@ -70,7 +72,8 @@
 <script setup>
 import { useScheduleStore } from "@/stores/schedule.js";
 import { usePostStore } from "@/stores/post.js";
-import { onMounted } from "vue";
+import { useLikesStore } from "@/stores/likes";
+import { ref, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import axios from "axios";
 
@@ -78,6 +81,7 @@ const route = useRoute();
 const router = useRouter();
 const store = useScheduleStore();
 const stores = usePostStore();
+const likesStore = useLikesStore();
 
 onMounted(() => {
   stores.getPostsByScheduleId(route.params.id);
@@ -87,7 +91,7 @@ onMounted(() => {
 const deleteSchedule = function () {
   if (confirm("일정을 삭제하시겠습니까?")) {
     axios
-      .delete(`http://localhost:8080/api-schedule/schedule/${route.params.id}`)
+      .delete(`http://localhost:8080/api/schedule/schedule/${route.params.id}`)
       .then((res) => {
         alert(res.data);
         router.push({ name: "calendar" });
@@ -110,9 +114,11 @@ const createPost = function () {
   });
 };
 
+const liked = likesStore.checkLike(stores.post.userId, stores.post.postId);
+
 const deletePost = function (id) {
   if (confirm("게시글을 삭제하시겠습니까?")) {
-    axios.delete(`http://localhost:8080/api-post/post/${id}`).then(() => {
+    axios.delete(`http://localhost:8080/api/post/${id}`).then(() => {
       stores.getPostsByScheduleId(route.params.id); // 게시글 목록 갱신
     });
   }
@@ -121,14 +127,15 @@ const deletePost = function (id) {
 const updatePost = function (id) {
   router.push({ name: "postUpdate", state: { id } });
 };
+
 </script>
 
 <style scoped>
 /* 전체 틀 */
 .schedule-detail-wrapper {
-  max-width: 800px;
+  max-width: 900px;
   margin: 20px auto;
-  padding: 20px;
+  /* padding: 20px; */
   font-family: "Arial", sans-serif;
 }
 
@@ -237,7 +244,7 @@ const updatePost = function (id) {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 5px;
+  /* margin-bottom: 5px; */
 }
 
 .post-summary .left {
@@ -251,6 +258,15 @@ const updatePost = function (id) {
   font-size: 0.9em;
   color: #999;
 }
+
+/* fas.fa-heart {
+  color: grey !important;
+  font-size: 20px;
+}
+
+.share-status .likes {
+  display: flex;
+} */
 
 /* 버튼 섹션 */
 .post-buttons {
@@ -288,7 +304,13 @@ a {
   color: black;
 }
 
-a:hover .post-summary {
+a:hover .post-wrapper {
   background-color: rgba(211, 211, 211, 0.2);
+}
+
+.share-status {
+  text-align: right;
+  font-size: 0.9em;
+  color: #999;
 }
 </style>

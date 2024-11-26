@@ -13,7 +13,7 @@ export const useCalendarStore = defineStore(
 
     const getSchedules = function () {
       return axios
-        .get(`${REST_API_URL}/api-schedule/schedule`, {
+        .get(`${REST_API_URL}/api/schedule`, {
           withCredentials: true,
         })
         .then((res) => {
@@ -36,7 +36,7 @@ export const useCalendarStore = defineStore(
 
     const getPosts = function () {
       return axios
-        .get(`${REST_API_URL}/api-post/post`, {
+        .get(`${REST_API_URL}/api/post`, {
           withCredentials: true,
         })
         .then((res) => {
