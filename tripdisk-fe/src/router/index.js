@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import CalendarView from "@/views/CalendarView.vue";
 import LoginView from "@/views/LoginView.vue";
+import MyPageView from "@/views/MyPageView.vue";
 
 import ScheduleCreate from "@/components/schedule/ScheduleCreate.vue";
 import ScheduleDetail from "@/components/schedule/ScheduleDetail.vue";
@@ -12,6 +13,9 @@ import PostList from "@/components/post/PostList.vue";
 import PostUpdate from "@/components/post/PostUpdate.vue";
 import UserSignup from "@/components/user/UserSignup.vue";
 import UserUpdate from "@/components/user/UserUpdate.vue";
+import MyPost from "@/components/user/MyPost.vue";
+import SharedPost from "@/components/user/SharedPost.vue";
+
 import { useUserStore } from "@/stores/user";
 
 const router = createRouter({
@@ -81,6 +85,23 @@ const router = createRouter({
       path: "/update",
       name: "update",
       component: UserUpdate,
+    },
+    {
+      path: "/myPage",
+      name: "myPage",
+      component: MyPageView,
+      children: [
+        {
+          path: "",
+          name: "myPost",
+          component: MyPost,
+        },
+        {
+          path: "sharedPost",
+          name: "sharedPost",
+          component: SharedPost,
+        },
+      ],
     },
   ],
 });

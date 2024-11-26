@@ -197,6 +197,7 @@ label {
 
 input,
 textarea {
+  width: 95%;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -281,6 +282,7 @@ input[type="file"] {
 
 /* 공유 여부 섹션 */
 .share-status {
+  width: 10%;
   display: flex;
   align-items: center;
   gap: 8px;
