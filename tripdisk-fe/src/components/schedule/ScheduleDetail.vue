@@ -63,7 +63,6 @@
             삭제
           </button>
         </div>
-
       </div>
     </div>
   </div>
@@ -91,7 +90,7 @@ onMounted(() => {
 const deleteSchedule = function () {
   if (confirm("일정을 삭제하시겠습니까?")) {
     axios
-      .delete(`http://localhost:8080/api/schedule/schedule/${route.params.id}`)
+      .delete(`http://localhost:8080/api/schedule/${route.params.id}`)
       .then((res) => {
         alert(res.data);
         router.push({ name: "calendar" });
@@ -127,7 +126,6 @@ const deletePost = function (id) {
 const updatePost = function (id) {
   router.push({ name: "postUpdate", state: { id } });
 };
-
 </script>
 
 <style scoped>
