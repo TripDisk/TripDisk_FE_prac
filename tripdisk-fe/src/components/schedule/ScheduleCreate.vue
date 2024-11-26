@@ -1,6 +1,6 @@
 <template>
   <div class="schedule-create-wrapper">
-    <h2>스케줄 등록</h2>
+    <h2>일정 등록</h2>
 
     <form @submit.prevent="submitSchedule">
       <div class="form-group">
