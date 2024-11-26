@@ -3,40 +3,39 @@
     <!-- 검색창 -->
     <div class="search-wrapper">
       <!-- 전체 게시글 확인 버튼 -->
-      <button @click="viewAllPosts" class="view-all-button">전체</button>
+      <button @click="viewAllPosts" class="view-all-button">
+        전체 게시글 확인
+      </button>
+      <!-- 공유한 글만 보기 체크박스 -->
+      <label class="checkbox-wrapper">
+        <input
+          type="checkbox"
+          v-model="isSharedOnly"
+          @change="filterSharedPosts"
+        />
+        공유한 글만 보기
+      </label>
 
-      <div class="search-right">
-        <!-- 공유한 글만 보기 체크박스 -->
-        <label class="checkbox-wrapper">
-          <input
-            type="checkbox"
-            v-model="isSharedOnly"
-            @change="filterSharedPosts"
-          />
-          공유한 글만 보기
-        </label>
+      <form @submit.prevent="searchPosts">
+        <!-- 검색 옵션 -->
+        <select v-model="searchKey" class="search-select">
+          <option value="all">전체</option>
+          <option value="title">제목</option>
+          <option value="content">내용</option>
+          <option value="place">장소</option>
+        </select>
 
-        <form @submit.prevent="searchPosts">
-          <!-- 검색 옵션 -->
-          <select v-model="searchKey" class="search-select">
-            <option value="all">전체</option>
-            <option value="title">제목</option>
-            <option value="content">내용</option>
-            <option value="place">장소</option>
-          </select>
+        <!-- 검색창 -->
+        <input
+          type="text"
+          v-model="searchWord"
+          class="search-input"
+          placeholder="검색어를 입력하세요"
+        />
 
-          <!-- 검색창 -->
-          <input
-            type="text"
-            v-model="searchWord"
-            class="search-input"
-            placeholder="검색어를 입력하세요"
-          />
-
-          <!-- 검색 버튼 -->
-          <button class="search-button">검색</button>
-        </form>
-      </div>
+        <!-- 검색 버튼 -->
+        <button class="search-button">검색</button>
+      </form>
     </div>
 
     <div class="post-detail-wrapper" v-for="post in filteredPosts">
@@ -91,6 +90,21 @@
           </div>
         </div>
 
+        <!-- 좋아요 버튼 -->
+        <div class="likes">
+          <i
+            v-if="post.isLiked"
+            class="bi bi-heart-fill"
+            @click="removeLike(post.userId, post.postId)"
+          ></i>
+          <i
+            v-else
+            class="bi bi-heart"
+            @click="toggleLike(post.userId, post.postId)"
+          ></i>
+          <span>{{ post.likesCount }}</span>
+        </div>
+
         <!-- 공유 여부 -->
         <div class="share-status">
           <span class="label">공유 여부:</span>
@@ -114,9 +128,11 @@
 <script setup>
 import { onMounted, ref, computed } from "vue";
 import { usePostStore } from "@/stores/post";
+import { useLikesStore } from "@/stores/likes";
 import { useRouter } from "vue-router";
 const router = useRouter();
 const store = usePostStore();
+const likesStore = useLikesStore();
 
 onMounted(() => {
   store.getPosts();
@@ -124,7 +140,7 @@ onMounted(() => {
 
 const deletePost = function (id) {
   if (confirm("게시글을 삭제하시겠습니까?")) {
-    axios.delete(`http://localhost:8080/api-post/post/${id}`).then(() => {
+    axios.delete(`http://localhost:8080/api/post/${id}`).then(() => {
       router.push({ name: "calendar" });
     });
   }
@@ -166,6 +182,27 @@ const filteredPosts = computed(() => {
   }
   return store.posts;
 });
+
+const toggleLike = function (userId, postId) {
+  likesStore.addLike(userId, postId);
+  const post = store.posts.find((post) => post.postId === postId);
+  if (post) {
+    post.isLiked = !post.isLiked;
+    post.likesCount += 1;
+  }
+};
+
+const removeLike = function (userId, postId) {
+  // liked.value = !liked.value;
+  // store.countDownLikes(store.post.postId);
+  // console.log("좋아요 개수 : ", store.post.likesCount);
+  likesStore.deleteLike(userId, postId);
+  const post = store.posts.find((post) => post.postId === postId);
+  if (post) {
+    post.isLiked = !post.isLiked;
+    post.likesCount += -1;
+  }
+};
 </script>
 
 <style scoped>
@@ -397,5 +434,18 @@ button {
 
 .delete-button:hover {
   background-color: #663d39;
+}
+.bi {
+  cursor: pointer;
+  margin-right: 3px;
+}
+
+.bi-heart-fill {
+  color: #ed6f63;
+}
+
+.likes {
+  width: 5%;
+  margin: 3px 0;
 }
 </style>
