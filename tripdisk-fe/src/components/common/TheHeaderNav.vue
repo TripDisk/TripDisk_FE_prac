@@ -122,8 +122,8 @@ nav {
 }
 
 .user-button {
-  background-color: #42b938;
-  color: #fff;
+  background-color: #fad0c9;
+  color: #6e6e6d;
   border: none;
   border-radius: 4px;
   padding: 10px 20px;
@@ -134,7 +134,7 @@ nav {
 }
 
 .user-button:hover {
-  background-color: #359d74;
+  background-color: #daa39a;
 }
 
 .dropdown-menu {
