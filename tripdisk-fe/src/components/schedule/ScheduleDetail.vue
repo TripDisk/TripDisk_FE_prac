@@ -183,7 +183,6 @@ const updatePost = function (id) {
 .delete-button,
 .add-post-button {
   text-align: center;
-  background-color: #4caf50;
   color: white;
   padding: 10px 15px;
   border-radius: 5px;
@@ -192,24 +191,32 @@ const updatePost = function (id) {
   font-weight: bold;
 }
 
+.edit-button {
+  /* background-color: #4caf50; */
+  /* background-color: #50586c; */
+  background-color: #e69a8d;
+}
+
 .edit-button:hover {
-  background-color: #45a049;
+  background-color: #cc7566;
 }
 
 .delete-button {
-  background-color: #f44336;
+  /* background-color: #f44336; */
+  background-color: #a26e6a;
 }
 
 .delete-button:hover {
-  background-color: #e53935;
+  background-color: #7e4844;
 }
 
 .add-post-button {
-  background-color: #2196f3;
+  /* background-color: #2196f3; */
+  background-color: #815854;
 }
 
 .add-post-button:hover {
-  background-color: #1976d2;
+  background-color: #663d39;
 }
 
 /* 게시글 목록 */
@@ -276,7 +283,6 @@ const updatePost = function (id) {
 .post-buttons .edit-button,
 .post-buttons .delete-button {
   text-align: center;
-  background-color: #4caf50;
   color: white;
   padding: 8px 12px;
   border-radius: 5px;
@@ -285,16 +291,20 @@ const updatePost = function (id) {
   font-weight: bold;
 }
 
+.post-buttons .edit-button {
+  background-color: #e69a8d;
+}
+
 .post-buttons .edit-button:hover {
-  background-color: #45a049;
+  background-color: #cc7566;
 }
 
 .post-buttons .delete-button {
-  background-color: #f44336;
+  background-color: #a26e6a;
 }
 
 .post-buttons .delete-button:hover {
-  background-color: #e53935;
+  background-color: #663d39;
 }
 
 a {

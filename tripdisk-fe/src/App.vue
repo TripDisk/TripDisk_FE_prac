@@ -13,7 +13,6 @@ import { useUserStore } from "@/stores/user";
 const userStore = useUserStore();
 
 onMounted(() => {
-  console.log("연결됐다");
   userStore.session(); // 앱 초기화 시 세션 확인
 });
 </script>

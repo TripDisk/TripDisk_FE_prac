@@ -131,7 +131,6 @@ const sessionUserId = ref(null);
 
 onMounted(() => {
   store.getShared();
-  console.log("여기 유저", store.posts, ", ", stores.loginUser.userId);
   sessionUserId.value = stores.loginUser.userId;
 });
 
@@ -152,12 +151,9 @@ const searchKey = ref("all");
 
 // 검색 요청
 const searchPosts = function () {
-  console.log("검색 클릭", searchKey.value, searchWord.value);
   store.searchPosts(searchKey.value, searchWord.value).then(() => {
-    console.log("검색이 다 끝나서 store에 저장했다");
     // filterSharedPosts();
   });
-  console.log(store.posts);
 };
 
 const viewAllPosts = function () {
@@ -212,7 +208,7 @@ const removeLike = function (userId, postId) {
 .search-wrapper button {
   padding: 8px 12px;
   font-size: 1em;
-  background-color: #007bff;
+  background-color: #aa9d9d;
   color: white;
   border: none;
   cursor: pointer;
@@ -220,7 +216,7 @@ const removeLike = function (userId, postId) {
 }
 
 .search-wrapper button:hover {
-  background-color: #0056b3;
+  background-color: #927f7f;
 }
 
 /* 전체 게시글 확인 버튼 */
@@ -251,7 +247,7 @@ const removeLike = function (userId, postId) {
 }
 
 .search-wrapper .search-button {
-  background-color: #007bff;
+  background-color: #aa9d9d;
   color: white;
   border: none;
   cursor: pointer;
@@ -259,7 +255,7 @@ const removeLike = function (userId, postId) {
 }
 
 .search-wrapper .search-button:hover {
-  background-color: #0056b3;
+  background-color: #927f7f;
 }
 
 .search-wrapper select,
@@ -384,21 +380,21 @@ button {
 }
 
 .edit-button {
-  background-color: #4caf50;
+  background-color: #e69a8d;
   color: white;
 }
 
 .edit-button:hover {
-  background-color: #45a049;
+  background-color: #cc7566;
 }
 
 .delete-button {
-  background-color: #dc3545;
+  background-color: #a26e6a;
   color: white;
 }
 
 .delete-button:hover {
-  background-color: #a71d2a;
+  background-color: #663d39;
 }
 .bi {
   cursor: pointer;

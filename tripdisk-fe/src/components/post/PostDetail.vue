@@ -96,6 +96,7 @@ const updatePost = function (id) {
   router.push({ name: "postUpdate", state: { id } });
 };
 
+
 const toggleLike = function () {
   // liked.value = !liked.value;
   // console.log("좋아요 uid pid : ", store.post.userId, " ", store.post.postId);
@@ -208,7 +209,6 @@ const removeLike = () => {
 .delete-button {
   display: inline-block;
   text-align: center;
-  background-color: #4caf50;
   color: white;
   text-decoration: none;
   padding: 10px 15px;
@@ -217,14 +217,17 @@ const removeLike = () => {
   border: none;
   cursor: pointer;
 }
+.edit-button {
+  background-color: #e69a8d;
+}
 .delete-button {
-  background-color: #f44336; /* 일정 삭제 버튼 색상 */
+  background-color: #a26e6a; /* 일정 삭제 버튼 색상 */
 }
 .edit-button:hover {
-  background-color: #45a049;
+  background-color: #cc7566;
 }
 .delete-button:hover {
-  background-color: #e53935; /* 호버 색상 */
+  background-color: #663d39; /* 호버 색상 */
 }
 .bi {
   cursor: pointer;

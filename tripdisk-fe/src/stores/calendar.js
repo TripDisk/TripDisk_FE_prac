@@ -60,9 +60,7 @@ export const useCalendarStore = defineStore(
     const total = ref([]);
 
     const combine = () => {
-      console.log("COMBINE");
       total.value = [...schedules.value, ...posts.value];
-      console.log(total.value);
     };
 
     return { getSchedules, getPosts, schedules, posts, combine, total };
