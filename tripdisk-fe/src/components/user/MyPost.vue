@@ -117,7 +117,6 @@ const store = usePostStore();
 
 onMounted(() => {
   store.getPosts();
-  console.log(store.posts);
 });
 
 const deletePost = function (id) {
@@ -137,12 +136,9 @@ const searchKey = ref("all");
 
 // 검색 요청
 const searchPosts = function () {
-  console.log("검색 클릭", searchKey.value, searchWord.value);
   store.searchPosts(searchKey.value, searchWord.value).then(() => {
-    console.log("검색이 다 끝나서 store에 저장했다");
     // filterSharedPosts();
   });
-  console.log(store.posts);
 };
 
 const viewAllPosts = function () {

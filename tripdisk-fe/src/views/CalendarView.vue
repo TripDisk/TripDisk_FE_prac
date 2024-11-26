@@ -52,16 +52,10 @@ watch(
 store
   .getSchedules()
   .then(() => {
-    console.log("then1 sch : ", store.schedules);
     return store.getPosts();
   })
   .then(() => {
-    console.log("then2 sch : ", store.schedules);
-    console.log("then2 po : ", store.posts);
     store.combine();
-  })
-  .then(() => {
-    console.log("TOTAL", store.total);
   });
 
 // options api -> composition api

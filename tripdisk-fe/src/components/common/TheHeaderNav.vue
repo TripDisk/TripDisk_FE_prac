@@ -82,6 +82,7 @@ const goToCalendar = function () {
 
 const mypage = function () {
   router.push("/myPage");
+  toggleDropdown(false);
 };
 </script>
 

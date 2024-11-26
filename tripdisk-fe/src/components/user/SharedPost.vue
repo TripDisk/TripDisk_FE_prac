@@ -112,7 +112,6 @@ const sessionUserId = ref(null);
 
 onMounted(() => {
   store.getShared();
-  console.log("여기 유저", store.posts, ", ", stores.loginUser.userId);
   sessionUserId.value = stores.loginUser.userId;
 });
 
@@ -133,12 +132,9 @@ const searchKey = ref("all");
 
 // 검색 요청
 const searchPosts = function () {
-  console.log("검색 클릭", searchKey.value, searchWord.value);
   store.searchPosts(searchKey.value, searchWord.value).then(() => {
-    console.log("검색이 다 끝나서 store에 저장했다");
     // filterSharedPosts();
   });
-  console.log(store.posts);
 };
 
 const viewAllPosts = function () {

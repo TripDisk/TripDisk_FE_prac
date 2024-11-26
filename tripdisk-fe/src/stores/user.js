@@ -18,19 +18,13 @@ export const useUserStore = defineStore("user", () => {
 
   // 로그인 기능
   const login = function (email, password) {
-    console.log(email);
-    console.log(password);
-
     api
       .post(`/login`, { email, password })
       .then((response) => {
-        console.log(response.data);
         session();
-        console.log("LOGIN", loginUser.value);
         router.push({ name: "calendar" });
       })
       .catch((error) => {
-        console.log(error.response.data);
         alert(error.response.data);
         loginUser.value = { username: "" };
         router.push({ name: "login" });
@@ -41,13 +35,9 @@ export const useUserStore = defineStore("user", () => {
   const session = async function () {
     try {
       const response = await api.get(`/current`);
-      console.log("USER DATA", response.data);
       loginUser.value = response.data;
-      // console.log(loginUser.value.username);
       router.push({ name: "calendar" });
     } catch (error) {
-      console.log("여기로 왔니?");
-      console.log(error.response.data);
       loginUser.value = { username: "" };
     }
   };
@@ -72,7 +62,6 @@ export const useUserStore = defineStore("user", () => {
       alert(response.data); // 서버의 성공 메시지 표시
       router.push({ name: "login" }); // 회원가입 후 로그인 페이지로 이동
     } catch (error) {
-      console.error(error.response.data); // 에러 메시지 출력
       alert("회원가입에 실패했습니다!");
     }
   };
@@ -85,7 +74,6 @@ export const useUserStore = defineStore("user", () => {
       loginUser.value = { username: "" };
       await router.push({ name: "login" });
     } catch (error) {
-      console.log(error.response.data);
       alert(error.response.data);
       loginUser.value = { username: "" };
       router.push({ name: "login" });
@@ -97,13 +85,11 @@ export const useUserStore = defineStore("user", () => {
     api
       .delete(`/signout`)
       .then((response) => {
-        console.log(response.data);
         alert(response.data);
         loginUser.value = { username: "" };
         router.push({ name: "login" });
       })
       .catch((error) => {
-        console.log(error.response.data);
         alert(error.response.data);
         loginUser.value = { username: "" };
         router.push({ name: "login" });
@@ -143,7 +129,6 @@ export const useUserStore = defineStore("user", () => {
 
       console.log("UPDATE USER", loginUser.value);
     } catch (error) {
-      console.error(error);
       alert("회원정보 수정에 실패했습니다.");
     }
   };

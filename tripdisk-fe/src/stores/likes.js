@@ -17,8 +17,6 @@ export const useLikesStore = defineStore("likes", () => {
   // 좋아요 등록
   const addLike = async (userId, postId) => {
     try {
-      console.log("likes.js : ", "좋아요 등록 시작");
-      console.log(userId, postId);
       const response = await api.post(`/add`, {
         userId,
         postId,
