@@ -4,36 +4,39 @@
     <div class="search-wrapper">
       <!-- 전체 게시글 확인 버튼 -->
       <button @click="viewAllPosts" class="view-all-button">전체</button>
-      <!-- 공유한 글만 보기 체크박스 -->
-      <label class="checkbox-wrapper">
-        <input
-          type="checkbox"
-          v-model="isSharedOnly"
-          @change="filterSharedPosts"
-        />
-        공유한 글만 보기
-      </label>
 
-      <form @submit.prevent="searchPosts">
-        <!-- 검색 옵션 -->
-        <select v-model="searchKey" class="search-select">
-          <option value="all">전체</option>
-          <option value="title">제목</option>
-          <option value="content">내용</option>
-          <option value="place">장소</option>
-        </select>
+      <div class="search-right">
+        <!-- 공유한 글만 보기 체크박스 -->
+        <label class="checkbox-wrapper">
+          <input
+            type="checkbox"
+            v-model="isSharedOnly"
+            @change="filterSharedPosts"
+          />
+          공유한 글만 보기
+        </label>
 
-        <!-- 검색창 -->
-        <input
-          type="text"
-          v-model="searchWord"
-          class="search-input"
-          placeholder="검색어를 입력하세요"
-        />
+        <form @submit.prevent="searchPosts">
+          <!-- 검색 옵션 -->
+          <select v-model="searchKey" class="search-select">
+            <option value="all">전체</option>
+            <option value="title">제목</option>
+            <option value="content">내용</option>
+            <option value="place">장소</option>
+          </select>
 
-        <!-- 검색 버튼 -->
-        <button class="search-button">검색</button>
-      </form>
+          <!-- 검색창 -->
+          <input
+            type="text"
+            v-model="searchWord"
+            class="search-input"
+            placeholder="검색어를 입력하세요"
+          />
+
+          <!-- 검색 버튼 -->
+          <button class="search-button">검색</button>
+        </form>
+      </div>
     </div>
 
     <div class="post-detail-wrapper" v-for="post in filteredPosts">
@@ -191,10 +194,23 @@ const filteredPosts = computed(() => {
   width: 100%;
 }
 
+.search-right {
+  display: flex;
+  justify-content: space-between;
+}
+
+.checkbox-wrapper {
+  display: block; /* 한 줄 전체를 차지하도록 변경 */
+  margin-left: 10px; /* 왼쪽 여백 추가 */
+  margin-right: 10px; /* 오른쪽 여백 추가 */
+  margin-top: 10px; /* 위쪽에 약간 여백 추가 */
+  font-size: 1em; /* 텍스트 크기 조정 (필요 시) */
+}
+
 .search-wrapper button {
   padding: 8px 12px;
   font-size: 1em;
-  background-color: #007bff;
+  background-color: #aa9d9d;
   color: white;
   border: none;
   cursor: pointer;
@@ -202,7 +218,7 @@ const filteredPosts = computed(() => {
 }
 
 .search-wrapper button:hover {
-  background-color: #0056b3;
+  background-color: #927f7f;
 }
 
 /* 전체 게시글 확인 버튼 */
@@ -233,7 +249,7 @@ const filteredPosts = computed(() => {
 }
 
 .search-wrapper .search-button {
-  background-color: #007bff;
+  background-color: #aa9d9d;
   color: white;
   border: none;
   cursor: pointer;
@@ -241,7 +257,7 @@ const filteredPosts = computed(() => {
 }
 
 .search-wrapper .search-button:hover {
-  background-color: #0056b3;
+  background-color: #927f7f;
 }
 
 .search-wrapper select,
@@ -366,20 +382,20 @@ button {
 }
 
 .edit-button {
-  background-color: #4caf50;
+  background-color: #e69a8d;
   color: white;
 }
 
 .edit-button:hover {
-  background-color: #45a049;
+  background-color: #cc7566;
 }
 
 .delete-button {
-  background-color: #dc3545;
+  background-color: #a26e6a;
   color: white;
 }
 
 .delete-button:hover {
-  background-color: #a71d2a;
+  background-color: #663d39;
 }
 </style>
